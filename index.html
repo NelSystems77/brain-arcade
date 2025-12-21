@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainArcade - Puzzles Modulares</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <header id="app-header">
+        <div class="logo">BrainArcade 🎮</div>
+        <div class="status-bar">
+            <span id="level-display">Nivel: 1</span>
+            <span id="xp-display">XP: 0/100</span>
+            <button id="theme-toggle" class="btn-icon" title="Modo Oscuro/Claro">🌙</button>
+        </div>
+    </header>
+
+    <section id="theme-selector" class="view active">
+        <h2>Elige tu Temática</h2>
+        <div class="grid-container" id="theme-grid">
+            </div>
+    </section>
+
+    <section id="game-selector" class="view hidden">
+        <div class="selector-header">
+            <button id="back-to-themes" class="btn-small">⬅ Volver</button>
+            <h2 id="selected-theme-title">Selecciona un Reto</h2>
+        </div>
+        
+        <div class="grid-container" id="game-grid">
+            
+            <div class="card game-card" data-game="anagrams">
+                <div class="icon">🔠</div>
+                <h3>Anagramas</h3>
+                <p>Ordena las letras</p>
+            </div>
+
+            <div class="card game-card" data-game="memory">
+                <div class="icon">🧠</div>
+                <h3>Memoria Visual</h3>
+                <p>Encuentra los pares</p>
+            </div>
+            
+            <div class="card game-card" data-game="sudoku">
+                <div class="icon">🔢</div>
+                <h3>Sudoku</h3>
+                <p>Lógica numérica</p>
+            </div>
+            
+            <div class="card game-card locked" data-game="crossword">
+                <div class="icon">✏️</div>
+                <h3>Crucigrama</h3>
+                <p>Nivel 10 requerido</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="game-container" class="view hidden">
+        <div class="game-header">
+            <button id="exit-game" class="btn-small">❌ Salir</button>
+            <span id="game-timer">--:--</span>
+        </div>
+        <div id="game-area">
+        </div>
+    </section>
+
+    <div id="modal-reward" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-icon">🏆</div>
+            <h3 id="reward-title">¡Genial!</h3>
+            <p id="reward-msg">+50 XP</p>
+            <button id="close-modal" class="btn-primary">Continuar</button>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/userManager.js"></script>
+    
+    <script src="js/games/anagrams.js"></script>
+    <script src="js/games/memory.js"></script>
+    <script src="js/games/sudoku.js"></script>
+    <script src="js/games/crossword.js"></script> <script src="js/main.js"></script>
+</body>
+</html>
