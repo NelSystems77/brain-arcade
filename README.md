@@ -20,6 +20,8 @@ src/
     confetti.js        # confeti en canvas, sin dependencias
     fx.js              # fachada: sfx + celebrate + shake
     speech.js          # lectura en voz alta (Web Speech API)
+    exercises/         # Mente Activa: data.js (contenido) + choiceRound.js
+                       #   + verbal.js (refranes/bombas/retahílas) + recuerdas.js
     games/             # anagrams · memory · sudoku · trivia · crossword
                        #   API común: new Game(area, themeData, onWin).start() [+ destroy()]
 scripts/build.mjs      # build / dev server con esbuild (sin config)
@@ -63,16 +65,23 @@ deployment → Source` debe estar en **GitHub Actions** (antes servía la raíz 
 - **Crucigrama** — 3 puzzles por temática (elegido al azar), con casillas
   numeradas que coinciden con las pistas; se desbloquea a nivel 10.
 
-## Mente Activa (modo accesible)
+## Mente Activa
 
-Pensado para adultos mayores u otras personas que prefieren un ritmo tranquilo. Se
-activa desde un botón en la pantalla de inicio y se recuerda (`brainArcadeAccessible`).
-Con `body.accessible`:
+Sección pensada para adultos mayores. Se entra desde un botón en la pantalla de
+inicio y se recuerda (`brainArcadeMenteActiva`). Al entrar:
 
-- Texto y controles más grandes, mayor contraste, foco muy visible.
-- Sin cronómetro y sin sacudidas; los tiempos de espera de trivia y memoria se alargan.
-- Botón **🔊 Escuchar** en la cabecera del juego que lee la pantalla en voz alta
-  (Web Speech API; se oculta si el navegador no la soporta).
+- **Presentación accesible** (`body.accessible`): texto y controles más grandes,
+  mayor contraste, foco muy visible, sin animaciones bruscas.
+- Sin cronómetro ni sacudidas; los tiempos de espera se alargan.
+- Botón **🔊 Escuchar** que lee la pantalla en voz alta (Web Speech API).
+- **Ejercicios propios** (sin temáticas, refuerzo siempre positivo):
+  - **Refranes y dichos** — completar el dicho (mezcla universal + tico).
+  - **Bombas** — elegir el verso que cierra una bomba tradicional.
+  - **Retahílas** — completar la recitación (*Sana sana, Tin marín, Los pollitos…*).
+  - **¿Qué recuerdas?** — ver objetos a tu ritmo y luego decir cuál estaba.
+
+El contenido folclórico vive en `src/js/exercises/data.js` (tiene variantes
+regionales; editable/ampliable a mano).
 
 ## Qué se optimizó
 

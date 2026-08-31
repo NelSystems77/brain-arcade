@@ -34,8 +34,38 @@
         <section id="theme-selector" class="view active">
             <h2>Elige tu Temática</h2>
             <p class="view-sub">Elige, juega y sube de nivel 🚀</p>
-            <button type="button" id="mente-activa-cta" class="ma-cta" aria-pressed="false"></button>
+            <button type="button" id="mente-activa-cta" class="ma-cta"></button>
             <div class="grid-container" id="theme-grid"></div>
+        </section>
+
+        <section id="mente-activa" class="view hidden">
+            <div class="selector-header">
+                <button id="ma-back" class="btn-small">⬅ Volver al inicio</button>
+                <h2>🧠 Mente Activa</h2>
+            </div>
+            <p class="view-sub">Ejercicios tranquilos para la memoria, el lenguaje y la concentración. Sin prisa y sin puntajes que bajen.</p>
+            <div class="grid-container" id="ma-grid">
+                <button type="button" class="card ex-card" data-ex="refranes" style="--acc:#f59e0b">
+                    <div class="icon" aria-hidden="true">💬</div>
+                    <h3>Refranes y dichos</h3>
+                    <p>Completá el dicho</p>
+                </button>
+                <button type="button" class="card ex-card" data-ex="bombas" style="--acc:#ef4444">
+                    <div class="icon" aria-hidden="true">🎉</div>
+                    <h3>Bombas</h3>
+                    <p>Elegí el verso que falta</p>
+                </button>
+                <button type="button" class="card ex-card" data-ex="retahilas" style="--acc:#7c5cff">
+                    <div class="icon" aria-hidden="true">🎵</div>
+                    <h3>Retahílas</h3>
+                    <p>Completá la recitación</p>
+                </button>
+                <button type="button" class="card ex-card" data-ex="recuerdas" style="--acc:#10b981">
+                    <div class="icon" aria-hidden="true">🧠</div>
+                    <h3>¿Qué recuerdas?</h3>
+                    <p>Mirá y recordá los objetos</p>
+                </button>
+            </div>
         </section>
 
         <section id="game-selector" class="view hidden">

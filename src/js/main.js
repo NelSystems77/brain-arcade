@@ -10,6 +10,8 @@ import { MemoryGame } from './games/memory.js';
 import { SudokuGame } from './games/sudoku.js';
 import { CrosswordGame } from './games/crossword.js';
 import { TriviaGame } from './games/trivia.js';
+import { makeRefranes, makeBombas, makeRetahilas } from './exercises/verbal.js';
+import { RecuerdasExercise } from './exercises/recuerdas.js';
 
 const GAME_FACTORY = {
     anagrams: (area, theme, onWin) => new AnagramGame(area, theme, onWin),
@@ -18,6 +20,14 @@ const GAME_FACTORY = {
         new SudokuGame(area, level >= SUDOKU_HARD_LEVEL ? 'hard' : 'easy', onWin),
     trivia: (area, theme, onWin) => new TriviaGame(area, theme, onWin),
     crossword: (area, theme, onWin) => new CrosswordGame(area, theme, onWin),
+};
+
+/** Ejercicios de Mente Activa: reciben (contenedor, onComplete(aciertos, total)). */
+const EXERCISE_FACTORY = {
+    refranes: makeRefranes,
+    bombas: makeBombas,
+    retahilas: makeRetahilas,
+    recuerdas: (area, done) => new RecuerdasExercise(area, done),
 };
 
 /** Icono y color de acento por temática (fallback para temas nuevos). */
@@ -31,7 +41,7 @@ const THEME_STYLE = {
 const DEFAULT_STYLE = { icon: '🎲', acc: '#7c5cff' };
 
 const THEME_KEY = 'brainArcadeTheme';
-const A11Y_KEY = 'brainArcadeAccessible';
+const MA_KEY = 'brainArcadeMenteActiva';
 
 function main() {
     const els = {
@@ -51,12 +61,15 @@ function main() {
         soundToggle: document.getElementById('sound-toggle'),
         themeToggle: document.getElementById('theme-toggle'),
         menteActivaCta: document.getElementById('mente-activa-cta'),
+        menteActivaView: document.getElementById('mente-activa'),
+        maGrid: document.getElementById('ma-grid'),
         speakBtn: document.getElementById('speak-btn'),
     };
 
     let currentThemeData = null;
     let currentGame = null;
     let lastLevel = null;
+    let returnView = els.gameSelector; // a dónde volver al salir de un juego/ejercicio
 
     // ---- Cronómetro del juego ---------------------------------------------
     let timerId = null;
@@ -139,38 +152,55 @@ function main() {
         els.themeToggle.textContent = dark ? '☀️' : '🌙';
     }
 
-    // ---- Mente Activa (modo accesible: texto grande, voz, sin prisa) --------
+    // ---- Mente Activa (sección accesible: texto grande, voz, sin prisa) -----
+    els.menteActivaCta.innerHTML =
+        '🧠 Mente Activa<small>Ejercicios tranquilos, texto grande y con voz</small>';
+
+    /** Activa/desactiva la presentación accesible (texto grande, sin animaciones). */
     function applyAccessible(on) {
         document.body.classList.toggle('accessible', on);
-        els.menteActivaCta.setAttribute('aria-pressed', on ? 'true' : 'false');
-        els.menteActivaCta.innerHTML = on
-            ? 'Volver al modo normal<small>El texto y los botones vuelven a su tamaño habitual</small>'
-            : '🧠 Mente Activa<small>Todo más grande, con botón de voz y sin cronómetro</small>';
         els.speakBtn.hidden = !on || !speechAvailable();
     }
 
-    (function initAccessible() {
-        let on = false;
-        try {
-            on = localStorage.getItem(A11Y_KEY) === '1';
-        } catch { /* ignore */ }
-        applyAccessible(on);
-    })();
+    function enterMenteActiva() {
+        applyAccessible(true);
+        try { localStorage.setItem(MA_KEY, '1'); } catch { /* ignore */ }
+        showView(els.menteActivaView);
+    }
+
+    function exitMenteActiva() {
+        stopSpeaking();
+        applyAccessible(false);
+        try { localStorage.setItem(MA_KEY, '0'); } catch { /* ignore */ }
+        showView(els.themeSelector);
+    }
 
     els.menteActivaCta.addEventListener('click', () => {
-        const on = !document.body.classList.contains('accessible');
-        try {
-            localStorage.setItem(A11Y_KEY, on ? '1' : '0');
-        } catch { /* ignore */ }
-        applyAccessible(on);
         sfx.play('click');
-        if (!on) stopSpeaking();
+        enterMenteActiva();
+    });
+    document.getElementById('ma-back').addEventListener('click', () => {
+        sfx.play('click');
+        exitMenteActiva();
     });
 
     els.speakBtn.addEventListener('click', () => {
         const raw = els.gameArea.innerText || els.gameArea.textContent || '';
         speak(raw.replace(/\s+/g, ' ').trim());
     });
+
+    // Arranca dentro de Mente Activa si así quedó la última vez.
+    let startInMenteActiva = false;
+    try {
+        // Migración de la clave anterior (modo accesible suelto → sección).
+        if (localStorage.getItem('brainArcadeAccessible') === '1') {
+            localStorage.setItem(MA_KEY, '1');
+            localStorage.removeItem('brainArcadeAccessible');
+        }
+        startInMenteActiva = localStorage.getItem(MA_KEY) === '1';
+    } catch { /* ignore */ }
+    if (startInMenteActiva) enterMenteActiva();
+    else applyAccessible(false);
 
     // ---- Pantalla de temas --------------------------------------------------
     const themeKeys = Object.keys(GAME_DATA);
@@ -225,12 +255,54 @@ function main() {
     });
 
     document.getElementById('exit-game').addEventListener('click', () => {
+        // En Mente Activa no preguntamos (más amable); en los juegos sí si hay progreso.
         const inProgress = currentGame && !currentGame.solved;
-        if (inProgress && !confirm('¿Seguro que quieres salir? Perderás el progreso actual.')) return;
+        const ask = inProgress && returnView === els.gameSelector;
+        if (ask && !confirm('¿Seguro que quieres salir? Perderás el progreso actual.')) return;
         sfx.play('click');
         endGame();
-        showView(els.gameSelector);
+        showView(returnView);
     });
+
+    // ---- Ejercicios de Mente Activa --------------------------------------
+    els.maGrid.addEventListener('click', (e) => {
+        const card = e.target.closest('.ex-card');
+        if (!card) return;
+        sfx.play('click');
+        startExercise(card.dataset.ex);
+    });
+
+    function startExercise(type) {
+        const factory = EXERCISE_FACTORY[type];
+        if (!factory) return;
+
+        returnView = els.menteActivaView;
+        showView(els.gameContainer);
+        stopSpeaking();
+        stopTimer();
+        els.gameArea.innerHTML = '';
+
+        const done = (correct, total) => {
+            const xp = 10 + correct * 5;
+            userManager.addXP(xp);
+            sfx.play('win');
+            celebrate({ y: 0.4, count: 120 });
+            showRewardModal(
+                xp,
+                '¡Muy bien! 🌟',
+                `Acertaste ${correct} de ${total} · +${xp} XP`,
+            );
+        };
+
+        try {
+            currentGame = factory(els.gameArea, done);
+            currentGame.start();
+        } catch (err) {
+            console.error('Error iniciando el ejercicio:', err);
+            els.gameArea.innerHTML = '<p>Hubo un error interno.</p>';
+            showView(els.menteActivaView);
+        }
+    }
 
     // ---- Tarjetas de juego (bloqueo dinámico por nivel) --------------------
     function renderGameLocks(level) {
@@ -269,6 +341,7 @@ function main() {
             return;
         }
 
+        returnView = els.gameSelector;
         showView(els.gameContainer);
         stopSpeaking();
         els.gameArea.innerHTML = '';
@@ -323,7 +396,7 @@ function main() {
         els.modal.classList.add('hidden');
         if (currentGame) {
             endGame();
-            showView(els.gameSelector);
+            showView(returnView);
         }
     });
 
