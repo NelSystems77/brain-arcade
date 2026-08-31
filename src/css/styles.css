@@ -130,15 +130,6 @@ header {
 }
 @keyframes logo-wobble { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
 
-.brand-line {
-    text-align: center;
-    margin: 6px 0 0;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--muted);
-}
-.brand-line strong { color: var(--primary); }
-
 .status-bar { display: flex; gap: 12px; align-items: center; }
 
 .level-badge {
@@ -696,16 +687,15 @@ body.accessible .recuerda__probe { font-size: 6.5rem; }
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    text-align: center;
     gap: 8px;
-    padding: 16px 18px calc(16px + env(safe-area-inset-bottom));
+    padding: 18px 18px calc(18px + env(safe-area-inset-bottom));
     font-family: var(--font-main);
     font-size: 0.78rem;
     font-weight: 700;
-    color: var(--muted);
-    background: color-mix(in srgb, var(--card-bg) 70%, transparent);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-top: 2px solid color-mix(in srgb, var(--primary) 18%, transparent);
+    color: color-mix(in srgb, var(--muted) 78%, transparent);
+    background: transparent;
+    border-top: 1px solid color-mix(in srgb, var(--primary) 9%, transparent);
 }
 .app-footer__brand {
     font-family: var(--font-display);
@@ -780,7 +770,6 @@ body.accessible *, body.accessible *::before, body.accessible *::after {
 
 body.accessible h2 { font-size: 2rem; }
 body.accessible .view-sub { font-size: 1.1rem; }
-body.accessible .brand-line { font-size: 1rem; }
 body.accessible #app-footer { font-size: 0.95rem; }
 body.accessible .logo__by { font-size: 0.72rem; }
 body.accessible .ma-cta { font-size: 1.15rem; max-width: 520px; }
