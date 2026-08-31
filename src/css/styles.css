@@ -175,7 +175,7 @@ header {
 /* =========================================
    VISTAS
    ========================================= */
-.view { display: none; padding: 40px 18px 60px; max-width: 880px; margin: 0 auto; }
+.view { display: none; padding: 40px 18px 60px; max-width: 1000px; margin: 0 auto; }
 .view.active { display: block; animation: view-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .hidden { display: none !important; }
 
@@ -206,15 +206,9 @@ h3 { font-family: var(--font-display); font-weight: 600; }
    ========================================= */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+    gap: 18px;
     margin-top: 28px;
-}
-
-/* El selector de juegos tiene más tarjetas: algo más compactas para que quepan. */
-#game-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 16px;
 }
 #game-grid .card { min-height: 168px; padding: 24px 12px 18px; }
 

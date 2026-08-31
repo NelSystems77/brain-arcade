@@ -146,5 +146,43 @@ export const GAME_DATA = {
             { question: "¿Qué película de 1984 tiene el lema 'Who you gonna call?'?", options: ["Los Cazafantasmas", "Gremlins", "Volver al Futuro", "Tron"], answer: 0 },
             { question: "¿Qué muñeco NO debía mojarse ni comer después de medianoche?", options: ["Gizmo (Gremlins)", "Chucky", "Teddy Ruxpin", "Furby"], answer: 0 }
         ]
+    },
+
+    ciencia: {
+        anagrams: ["ATOMO", "MOLECULA", "ELECTRON", "PROTON", "NEUTRON", "GRAVEDAD", "ENERGIA", "FUERZA", "MASA", "VELOCIDAD", "ACELERACION", "FOTOSINTESIS", "MITOCONDRIA", "NUCLEO", "CELULA", "ADN", "CROMOSOMA", "GEN", "PROTEINA", "ENZIMA", "BACTERIA", "VIRUS", "EVOLUCION", "ECOSISTEMA", "BIODIVERSIDAD", "PLANETA", "ESTRELLA", "GALAXIA", "COMETA", "ASTEROIDE", "AGUJERO NEGRO", "SUPERNOVA", "NEBULOSA", "TELESCOPIO", "MICROSCOPIO", "RELATIVIDAD", "CUANTICA", "TERMODINAMICA", "ENTROPIA", "ISOTOPO", "RADIACTIVIDAD", "FISION", "FUSION", "OXIGENO", "HIDROGENO", "CARBONO", "NITROGENO", "HELIO", "SODIO", "CALCIO", "HIERRO", "URANIO", "TABLA PERIODICA", "ENLACE", "ION", "ACIDO", "CATALIZADOR", "POLIMERO", "CRISTAL", "DENSIDAD", "PRESION", "TEMPERATURA", "ONDA", "FRECUENCIA", "ESPECTRO", "FOTON", "LASER", "IMAN", "CIRCUITO", "VOLTAJE", "CORRIENTE", "RESISTENCIA", "ELECTRICIDAD", "MAGNETISMO", "GENOMA", "VACUNA", "ANTIBIOTICO", "NEURONA", "SINAPSIS", "HORMONA", "METABOLISMO", "OSMOSIS", "GLUCOSA", "CLOROFILA", "VERTEBRADO", "MAMIFERO", "REPTIL", "ANFIBIO", "TERREMOTO", "VOLCAN", "FOSIL", "DINOSAURIO", "PALEONTOLOGIA", "ANTIMATERIA", "PARTICULA", "QUARK", "NEUTRINO", "GRAVITON"],
+        memory: ["🔬", "🧪", "🧬", "⚛️", "🔭", "🧲", "🦠", "🪐"],
+        crosswords: [
+            [
+                { word: "ATOMO", clue: "Unidad básica de la materia", startX: 1, startY: 3, direction: "horizontal" },
+                { word: "TESLA", clue: "Unidad de campo magnético", startX: 2, startY: 3, direction: "vertical" },
+                { word: "MASA", clue: "Cantidad de materia de un cuerpo", startX: 4, startY: 3, direction: "vertical" }
+            ],
+            [
+                { word: "ENERGIA", clue: "Capacidad de realizar un trabajo", startX: 1, startY: 2, direction: "horizontal" },
+                { word: "NEWTON", clue: "Unidad de fuerza; físico de la gravedad", startX: 2, startY: 2, direction: "vertical" },
+                { word: "GEN", clue: "Unidad de la herencia biológica", startX: 5, startY: 2, direction: "vertical" },
+                { word: "AGUA", clue: "H₂O, esencial para la vida", startX: 7, startY: 2, direction: "vertical" }
+            ],
+            [
+                { word: "PLANETA", clue: "Cuerpo que orbita una estrella", startX: 1, startY: 4, direction: "horizontal" },
+                { word: "LUNA", clue: "Satélite natural de la Tierra", startX: 2, startY: 4, direction: "vertical" },
+                { word: "NUCLEO", clue: "Centro de la célula o del átomo", startX: 4, startY: 4, direction: "vertical" },
+                { word: "TIERRA", clue: "El tercer planeta desde el Sol", startX: 6, startY: 4, direction: "vertical" }
+            ]
+        ],
+        trivia: [
+            { question: "¿Cuál es el planeta más grande del Sistema Solar?", options: ["Júpiter", "Saturno", "Neptuno", "La Tierra"], answer: 0 },
+            { question: "¿Qué gas absorben las plantas para la fotosíntesis?", options: ["Dióxido de carbono", "Oxígeno", "Nitrógeno", "Helio"], answer: 0 },
+            { question: "¿Cuál es el símbolo químico del oro?", options: ["Au", "Ag", "Or", "Go"], answer: 0 },
+            { question: "¿Qué científica ganó dos premios Nobel en ciencias distintas?", options: ["Marie Curie", "Rosalind Franklin", "Lise Meitner", "Ada Lovelace"], answer: 0 },
+            { question: "¿Qué fuerza mantiene a los planetas orbitando el Sol?", options: ["La gravedad", "El magnetismo", "La fricción", "La presión"], answer: 0 },
+            { question: "¿Qué molécula almacena la información genética?", options: ["El ADN", "La glucosa", "El ATP", "El colágeno"], answer: 0 },
+            { question: "¿Quién formuló la teoría de la relatividad?", options: ["Albert Einstein", "Isaac Newton", "Niels Bohr", "Galileo Galilei"], answer: 0 },
+            { question: "¿Qué metal es líquido a temperatura ambiente?", options: ["El mercurio", "El plomo", "El sodio", "El hierro"], answer: 0 },
+            { question: "¿Qué orgánulo produce la energía (ATP) de la célula?", options: ["La mitocondria", "El núcleo", "El ribosoma", "La membrana"], answer: 0 },
+            { question: "¿A qué velocidad aproximada viaja la luz en el vacío?", options: ["300 000 km/s", "300 km/s", "30 000 km/s", "3 000 000 km/s"], answer: 0 },
+            { question: "¿Cuál es el mamífero más grande del planeta?", options: ["La ballena azul", "El elefante africano", "El tiburón ballena", "La orca"], answer: 0 },
+            { question: "¿Cómo se llama el paso del agua de líquido a vapor?", options: ["Evaporación", "Condensación", "Sublimación", "Solidificación"], answer: 0 }
+        ]
     }
 };

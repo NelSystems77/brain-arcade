@@ -1,7 +1,8 @@
 # BrainArcade 🎮🧠
 
 Colección modular de puzzles en JavaScript vanilla: **anagramas**, **memoria visual**,
-**sudoku**, **trivia** y **crucigrama**, con sistema de niveles, XP y progreso persistente.
+**sudoku**, **trivia** y **crucigrama**, sobre 5 temáticas (cine, rock, biblia, 80s,
+ciencia), con sistema de niveles, XP y progreso persistente.
 
 ## Estructura
 
@@ -12,7 +13,7 @@ src/
   js/
     main.js            # punto de entrada: navegación, modales, tema
     config.js          # constantes (XP, recompensas, niveles de desbloqueo, trivia)
-    data.js            # temáticas y contenidos (cine, rock, biblia, 80s): anagramas, memoria, crucigramas, trivia
+    data.js            # temáticas (cine, rock, biblia, 80s, ciencia): anagramas, memoria, crucigramas, trivia
     userManager.js     # XP / nivel / localStorage
     utils.js           # shuffle (Fisher–Yates), randomItem
     sfx.js             # efectos de sonido sintetizados (WebAudio)

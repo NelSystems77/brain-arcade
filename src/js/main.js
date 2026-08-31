@@ -25,6 +25,7 @@ const THEME_STYLE = {
     rock: { icon: '🎸', acc: '#7c5cff' },
     biblia: { icon: '📖', acc: '#3b82f6' },
     ochentas: { icon: '📼', acc: '#06b6d4' },
+    ciencia: { icon: '🔬', acc: '#10b981' },
 };
 const DEFAULT_STYLE = { icon: '🎲', acc: '#7c5cff' };
 
