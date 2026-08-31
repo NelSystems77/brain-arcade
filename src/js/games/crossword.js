@@ -1,5 +1,5 @@
 import { GAME_REWARDS } from '../config.js';
-import { randomItem } from '../utils.js';
+import { randomItem, calmMode } from '../utils.js';
 import { sfx, shake } from '../fx.js';
 
 export class CrosswordGame {
@@ -87,7 +87,7 @@ export class CrosswordGame {
         `;
 
         const gridEl = this.container.querySelector('#cw-grid');
-        const CELL = window.innerWidth < 420 ? 26 : 30;
+        const CELL = calmMode() ? 36 : (window.innerWidth < 420 ? 26 : 30);
         gridEl.style.gridTemplateColumns = `repeat(${this.cols}, ${CELL}px)`;
         gridEl.style.gridTemplateRows = `repeat(${this.rows}, ${CELL}px)`;
 

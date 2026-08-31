@@ -641,6 +641,7 @@ input.game-input:focus { outline: none; border-color: var(--primary); box-shadow
    ACCESIBILIDAD
    ========================================= */
 :focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
+[hidden] { display: none !important; }
 
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -649,6 +650,93 @@ input.game-input:focus { outline: none; border-color: var(--primary); box-shadow
         transition-duration: 0.01ms !important;
     }
 }
+
+/* Llamada a "Mente Activa" en la pantalla de inicio */
+.ma-cta {
+    display: block;
+    width: 100%;
+    max-width: 440px;
+    margin: 18px auto 4px;
+    padding: 15px 20px;
+    border: 2px dashed var(--primary);
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--primary) 8%, var(--card-bg));
+    color: var(--text-color);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    line-height: 1.35;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.ma-cta:hover { background: color-mix(in srgb, var(--primary) 16%, var(--card-bg)); }
+.ma-cta small {
+    display: block;
+    margin-top: 3px;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--muted);
+}
+.speak-btn { --btn: var(--accent); --btn-ink: var(--accent-ink); }
+
+/* =========================================
+   MENTE ACTIVA · modo accesible (texto grande, alto contraste, sin prisa)
+   ========================================= */
+body.accessible {
+    --muted: #4a4866;
+    font-size: 19px;
+}
+body.accessible.dark-mode { --muted: #ccc9ec; }
+
+body.accessible,
+body.accessible::before,
+body.accessible::after { animation: none !important; }
+body.accessible *, body.accessible *::before, body.accessible *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+}
+
+body.accessible h2 { font-size: 2rem; }
+body.accessible .view-sub { font-size: 1.1rem; }
+body.accessible .ma-cta { font-size: 1.15rem; max-width: 520px; }
+
+body.accessible .card { min-height: 210px; }
+body.accessible .card h3 { font-size: 1.35rem; }
+body.accessible .card p { font-size: 1.05rem; }
+body.accessible .card .icon { width: 92px; height: 92px; font-size: 2.7rem; }
+body.accessible .game-card:not(.locked)::after { display: none; } /* sin el badge ▶, menos ruido */
+
+body.accessible .btn-primary,
+body.accessible .btn-small { font-size: 1.2rem; padding: 16px 30px; }
+body.accessible .btn-small { padding: 13px 22px; }
+body.accessible .btn-icon { width: 52px; height: 52px; font-size: 1.4rem; }
+
+body.accessible #game-timer { display: none; }
+body.accessible .feedback { font-size: 1.25rem; }
+
+body.accessible .scrambled-word { font-size: 3rem; letter-spacing: 10px; }
+body.accessible input.game-input { font-size: 1.4rem; padding: 18px; max-width: 400px; }
+
+body.accessible .trivia { max-width: 640px; }
+body.accessible .trivia__bar { font-size: 1rem; }
+body.accessible .trivia__q { font-size: 1.6rem; }
+body.accessible .trivia-opt { font-size: 1.25rem; padding: 20px 24px; }
+body.accessible .trivia__score { font-size: 4rem; }
+
+body.accessible .memory-card { font-size: 3rem; border-radius: 18px; }
+body.accessible .num-btn { padding: 18px 0; font-size: 1.5rem; }
+body.accessible .sudoku-cell { font-size: 1.5rem; }
+body.accessible .sudoku-grid, body.accessible .numpad { max-width: 460px; }
+
+body.accessible .clues-box { font-size: 1.1rem; }
+body.accessible .clues-box h4 { font-size: 1.1rem; }
+body.accessible .cw-cell-input { font-size: 20px; }
+body.accessible .cw-num { font-size: 11px; }
+body.accessible .crossword-container { overflow-x: auto; max-width: 100%; }
+
+body.accessible :focus-visible { outline: 4px solid var(--primary); outline-offset: 3px; }
 
 /* =========================================
    RESPONSIVE

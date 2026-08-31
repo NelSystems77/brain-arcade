@@ -1,4 +1,4 @@
-import { shuffle } from '../utils.js';
+import { shuffle, calmMode } from '../utils.js';
 import { GAME_REWARDS } from '../config.js';
 import { sfx } from '../fx.js';
 
@@ -77,7 +77,7 @@ export class MemoryGame {
                 }
                 this.flipped = [];
                 this.locked = false;
-            }, 900);
+            }, calmMode() ? 1800 : 900);
         }
     }
 }

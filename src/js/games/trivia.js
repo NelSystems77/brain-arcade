@@ -1,4 +1,4 @@
-import { shuffle } from '../utils.js';
+import { shuffle, calmMode } from '../utils.js';
 import { TRIVIA } from '../config.js';
 import { sfx, shake } from '../fx.js';
 
@@ -77,7 +77,7 @@ export class TriviaGame {
             fb.textContent = 'La respuesta correcta está en verde.';
         }
 
-        this.timer = setTimeout(() => this.next(), 1500);
+        this.timer = setTimeout(() => this.next(), calmMode() ? 3200 : 1500);
     }
 
     next() {

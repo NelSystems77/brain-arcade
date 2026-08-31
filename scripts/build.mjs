@@ -31,7 +31,13 @@ const options = {
     logLevel: 'info',
 };
 
-rmSync(OUTDIR, { recursive: true, force: true });
+// Limpieza best-effort: en Windows el directorio puede quedar bloqueado
+// temporalmente (antivirus, indexador). esbuild sobrescribe sus salidas igual.
+try {
+    rmSync(OUTDIR, { recursive: true, force: true });
+} catch (e) {
+    console.warn(`  (aviso) no se pudo limpiar ${OUTDIR}: ${e.code ?? e.message}`);
+}
 
 if (serve) {
     const ctx = await esbuild.context(options);

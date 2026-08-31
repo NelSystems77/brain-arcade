@@ -4,6 +4,7 @@ import { GAME_DATA } from './data.js';
 import { UserManager } from './userManager.js';
 import { GAME_UNLOCK_LEVEL, SUDOKU_HARD_LEVEL, XP_PER_LEVEL } from './config.js';
 import { sfx, celebrate } from './fx.js';
+import { speak, stopSpeaking, speechAvailable } from './speech.js';
 import { AnagramGame } from './games/anagrams.js';
 import { MemoryGame } from './games/memory.js';
 import { SudokuGame } from './games/sudoku.js';
@@ -30,6 +31,7 @@ const THEME_STYLE = {
 const DEFAULT_STYLE = { icon: '🎲', acc: '#7c5cff' };
 
 const THEME_KEY = 'brainArcadeTheme';
+const A11Y_KEY = 'brainArcadeAccessible';
 
 function main() {
     const els = {
@@ -48,6 +50,8 @@ function main() {
         xpFill: document.getElementById('xp-fill'),
         soundToggle: document.getElementById('sound-toggle'),
         themeToggle: document.getElementById('theme-toggle'),
+        menteActivaCta: document.getElementById('mente-activa-cta'),
+        speakBtn: document.getElementById('speak-btn'),
     };
 
     let currentThemeData = null;
@@ -59,6 +63,11 @@ function main() {
     let timerStart = 0;
     function startTimer() {
         stopTimer();
+        // "Mente Activa": sin prisa, no se muestra cronómetro.
+        if (document.body.classList.contains('accessible')) {
+            els.timer.textContent = '';
+            return;
+        }
         timerStart = Date.now();
         els.timer.textContent = '00:00';
         timerId = setInterval(() => {
@@ -130,6 +139,39 @@ function main() {
         els.themeToggle.textContent = dark ? '☀️' : '🌙';
     }
 
+    // ---- Mente Activa (modo accesible: texto grande, voz, sin prisa) --------
+    function applyAccessible(on) {
+        document.body.classList.toggle('accessible', on);
+        els.menteActivaCta.setAttribute('aria-pressed', on ? 'true' : 'false');
+        els.menteActivaCta.innerHTML = on
+            ? 'Volver al modo normal<small>El texto y los botones vuelven a su tamaño habitual</small>'
+            : '🧠 Mente Activa<small>Todo más grande, con botón de voz y sin cronómetro</small>';
+        els.speakBtn.hidden = !on || !speechAvailable();
+    }
+
+    (function initAccessible() {
+        let on = false;
+        try {
+            on = localStorage.getItem(A11Y_KEY) === '1';
+        } catch { /* ignore */ }
+        applyAccessible(on);
+    })();
+
+    els.menteActivaCta.addEventListener('click', () => {
+        const on = !document.body.classList.contains('accessible');
+        try {
+            localStorage.setItem(A11Y_KEY, on ? '1' : '0');
+        } catch { /* ignore */ }
+        applyAccessible(on);
+        sfx.play('click');
+        if (!on) stopSpeaking();
+    });
+
+    els.speakBtn.addEventListener('click', () => {
+        const raw = els.gameArea.innerText || els.gameArea.textContent || '';
+        speak(raw.replace(/\s+/g, ' ').trim());
+    });
+
     // ---- Pantalla de temas --------------------------------------------------
     const themeKeys = Object.keys(GAME_DATA);
     if (themeKeys.length === 0) {
@@ -170,6 +212,7 @@ function main() {
 
     function endGame() {
         stopTimer();
+        stopSpeaking();
         currentGame?.destroy?.();
         currentGame = null;
         els.gameArea.innerHTML = '';
@@ -227,6 +270,7 @@ function main() {
         }
 
         showView(els.gameContainer);
+        stopSpeaking();
         els.gameArea.innerHTML = '';
         startTimer();
 

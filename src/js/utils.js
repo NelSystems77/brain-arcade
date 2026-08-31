@@ -14,6 +14,11 @@ export function shuffle(array) {
     return a;
 }
 
+/** ¿Está activo el modo "Mente Activa" (accesible, sin prisa)? */
+export function calmMode() {
+    return document.body.classList.contains('accessible');
+}
+
 /** Elemento al azar del array, evitando (si se puede) repetir `exclude`. */
 export function randomItem(array, exclude) {
     if (array.length <= 1) return array[0];

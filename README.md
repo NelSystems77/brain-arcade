@@ -19,6 +19,7 @@ src/
     sfx.js             # efectos de sonido sintetizados (WebAudio)
     confetti.js        # confeti en canvas, sin dependencias
     fx.js              # fachada: sfx + celebrate + shake
+    speech.js          # lectura en voz alta (Web Speech API)
     games/             # anagrams · memory · sudoku · trivia · crossword
                        #   API común: new Game(area, themeData, onWin).start() [+ destroy()]
 scripts/build.mjs      # build / dev server con esbuild (sin config)
@@ -61,6 +62,17 @@ deployment → Source` debe estar en **GitHub Actions** (antes servía la raíz 
 - **Trivia** — 5 preguntas al azar de opción múltiple; 12 XP por acierto.
 - **Crucigrama** — 3 puzzles por temática (elegido al azar), con casillas
   numeradas que coinciden con las pistas; se desbloquea a nivel 10.
+
+## Mente Activa (modo accesible)
+
+Pensado para adultos mayores u otras personas que prefieren un ritmo tranquilo. Se
+activa desde un botón en la pantalla de inicio y se recuerda (`brainArcadeAccessible`).
+Con `body.accessible`:
+
+- Texto y controles más grandes, mayor contraste, foco muy visible.
+- Sin cronómetro y sin sacudidas; los tiempos de espera de trivia y memoria se alargan.
+- Botón **🔊 Escuchar** en la cabecera del juego que lee la pantalla en voz alta
+  (Web Speech API; se oculta si el navegador no la soporta).
 
 ## Qué se optimizó
 
