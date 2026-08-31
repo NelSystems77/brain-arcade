@@ -184,5 +184,45 @@ export const GAME_DATA = {
             { question: "¿Cuál es el mamífero más grande del planeta?", options: ["La ballena azul", "El elefante africano", "El tiburón ballena", "La orca"], answer: 0 },
             { question: "¿Cómo se llama el paso del agua de líquido a vapor?", options: ["Evaporación", "Condensación", "Sublimación", "Solidificación"], answer: 0 }
         ]
+    },
+
+    futbol: {
+        anagrams: ["MESSI", "CRISTIANO RONALDO", "MARADONA", "PELE", "NEYMAR", "MBAPPE", "HAALAND", "ZIDANE", "RONALDINHO", "INIESTA", "XAVI", "PUYOL", "CASILLAS", "BUFFON", "MANUEL NEUER", "KEYLOR NAVAS", "BRYAN RUIZ", "PARKS", "RUEDA", "CAMPBELL", "SABORIO", "WANCHOPE", "OSCAR RAMIREZ", "BORA MILUTINOVIC", "REAL MADRID", "BARCELONA", "MANCHESTER UNITED", "LIVERPOOL", "CHELSEA", "ARSENAL", "JUVENTUS", "MILAN", "INTER", "BAYERN MUNICH", "BORUSSIA DORTMUND", "PARIS SAINT GERMAIN", "AJAX", "BOCA JUNIORS", "RIVER PLATE", "SAPRISSA", "ALAJUELENSE", "HEREDIANO", "CARTAGINES", "MUNDIAL", "CHAMPIONS LEAGUE", "COPA AMERICA", "EUROCOPA", "LIBERTADORES", "BALON DE ORO", "GOLEADOR", "PORTERO", "ARQUERO", "DELANTERO", "DEFENSA", "MEDIOCAMPISTA", "ARBITRO", "PENALTI", "TIRO LIBRE", "CORNER", "SAQUE DE BANDA", "FUERA DE JUEGO", "TARJETA ROJA", "TARJETA AMARILLA", "AUTOGOL", "HAT TRICK", "CHILENA", "RABONA", "GAMBETA", "REGATE", "ASISTENCIA", "PRORROGA", "TANDA DE PENALES", "ESTADIO NACIONAL", "CAMP NOU", "SANTIAGO BERNABEU", "WEMBLEY", "MARACANA", "SAN SIRO", "ANFIELD", "OLD TRAFFORD", "VAR", "OFFSIDE", "CENTROCAMPISTA", "CAPITAN", "BANQUILLO", "TIEMPO EXTRA", "COMBINADO", "SELECCION", "LA SELE", "GOL", "REMATE", "CABEZAZO", "PARADA", "ATAJADA"],
+        memory: ["⚽", "🥅", "🧤", "🏆", "👟", "🟨", "🟥", "🚩"],
+        crosswords: [
+            [
+                { word: "MARADONA", clue: "Astro argentino del Mundial 86, la 'mano de Dios'", startX: 1, startY: 3, direction: "horizontal" },
+                { word: "MESSI", clue: "El 10 argentino que ganó el Mundial 2022, 'La Pulga'", startX: 1, startY: 3, direction: "vertical" },
+                { word: "RONALDO", clue: "Cristiano ___, goleador portugués", startX: 3, startY: 3, direction: "vertical" },
+                { word: "NEYMAR", clue: "Estrella brasileña que jugó en Barça y PSG", startX: 7, startY: 3, direction: "vertical" }
+            ],
+            [
+                { word: "ARBITRO", clue: "Dirige el partido y pita las faltas", startX: 1, startY: 2, direction: "horizontal" },
+                { word: "AREA", clue: "El ___ grande; zona donde el portero usa las manos", startX: 1, startY: 2, direction: "vertical" },
+                { word: "BALON", clue: "El esférico con que se juega", startX: 3, startY: 2, direction: "vertical" },
+                { word: "TARJETA", clue: "Amarilla o roja que muestra el árbitro", startX: 5, startY: 2, direction: "vertical" },
+                { word: "ONCE", clue: "Cantidad de jugadores de un equipo en el campo", startX: 7, startY: 2, direction: "vertical" }
+            ],
+            [
+                { word: "NAVAS", clue: "Keylor ___, arquero tico de talla mundial", startX: 1, startY: 4, direction: "horizontal" },
+                { word: "NUEVE", clue: "Número clásico del delantero centro", startX: 1, startY: 4, direction: "vertical" },
+                { word: "VAR", clue: "Árbitro asistente de video (siglas en inglés)", startX: 3, startY: 4, direction: "vertical" },
+                { word: "SELE", clue: "'La ___', apodo de la selección de Costa Rica", startX: 5, startY: 4, direction: "vertical" }
+            ]
+        ],
+        trivia: [
+            { question: "¿Qué país ganó el Mundial de Fútbol 2022?", options: ["Argentina", "Francia", "Brasil", "Alemania"], answer: 0 },
+            { question: "¿Cada cuántos años se juega la Copa del Mundo?", options: ["4", "2", "3", "5"], answer: 0 },
+            { question: "¿Cuántos jugadores por equipo hay en el campo?", options: ["11", "10", "9", "12"], answer: 0 },
+            { question: "¿Quién tiene el récord de más Balones de Oro?", options: ["Lionel Messi", "Cristiano Ronaldo", "Michel Platini", "Johan Cruyff"], answer: 0 },
+            { question: "¿En qué país se jugó el Mundial de 2014?", options: ["Brasil", "Sudáfrica", "Rusia", "Alemania"], answer: 0 },
+            { question: "¿Qué selección ha ganado más Copas del Mundo?", options: ["Brasil", "Alemania", "Italia", "Argentina"], answer: 0 },
+            { question: "¿Cómo se llama el estadio del FC Barcelona?", options: ["Camp Nou", "Santiago Bernabéu", "Wembley", "San Siro"], answer: 0 },
+            { question: "¿Cuánto dura un partido reglamentario, sin descuentos?", options: ["90 minutos", "60 minutos", "120 minutos", "45 minutos"], answer: 0 },
+            { question: "¿Qué jugador es apodado 'La Pulga'?", options: ["Lionel Messi", "Sergio Agüero", "Diego Maradona", "Carlos Tévez"], answer: 0 },
+            { question: "En el Mundial 2014, ¿hasta qué ronda llegó Costa Rica?", options: ["Cuartos de final", "Octavos de final", "Semifinal", "Fase de grupos"], answer: 0 },
+            { question: "¿Qué tarjeta significa expulsión directa?", options: ["Roja", "Amarilla", "Verde", "Azul"], answer: 0 },
+            { question: "¿Quién marcó el gol de 'la mano de Dios' en 1986?", options: ["Diego Maradona", "Pelé", "Jorge Valdano", "Gabriel Batistuta"], answer: 0 }
+        ]
     }
 };

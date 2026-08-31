@@ -37,6 +37,7 @@ const THEME_STYLE = {
     biblia: { icon: '📖', acc: '#3b82f6' },
     ochentas: { icon: '📼', acc: '#06b6d4' },
     ciencia: { icon: '🔬', acc: '#10b981' },
+    futbol: { icon: '⚽', acc: '#f59e0b' },
 };
 const DEFAULT_STYLE = { icon: '🎲', acc: '#7c5cff' };
 
