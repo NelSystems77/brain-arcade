@@ -1,5 +1,6 @@
 import { shuffle } from '../utils.js';
 import { GAME_REWARDS } from '../config.js';
+import { sfx, shake } from '../fx.js';
 
 export class SudokuGame {
     constructor(container, difficulty, onComplete) {
@@ -146,6 +147,7 @@ export class SudokuGame {
         const cell = this.container.querySelector(`.sudoku-cell[data-r="${r}"][data-c="${c}"]`);
         cell.textContent = num === 0 ? '' : num;
         cell.classList.toggle('user-filled', num !== 0);
+        if (num !== 0) sfx.play('flip');
     }
 
     checkWin() {
@@ -158,6 +160,8 @@ export class SudokuGame {
             this.msg.textContent = '¡Sudoku Resuelto!';
             this.onComplete(GAME_REWARDS.sudoku);
         } else {
+            sfx.play('wrong');
+            shake(this.container);
             this.msg.className = 'feedback feedback--err';
             this.msg.textContent = 'Hay errores, revisa los números.';
         }

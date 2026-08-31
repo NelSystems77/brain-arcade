@@ -2,7 +2,8 @@ import '../css/styles.css';
 
 import { GAME_DATA } from './data.js';
 import { UserManager } from './userManager.js';
-import { GAME_UNLOCK_LEVEL, SUDOKU_HARD_LEVEL } from './config.js';
+import { GAME_UNLOCK_LEVEL, SUDOKU_HARD_LEVEL, XP_PER_LEVEL } from './config.js';
+import { sfx, celebrate } from './fx.js';
 import { AnagramGame } from './games/anagrams.js';
 import { MemoryGame } from './games/memory.js';
 import { SudokuGame } from './games/sudoku.js';
@@ -16,6 +17,15 @@ const GAME_FACTORY = {
     crossword: (area, theme, onWin) => new CrosswordGame(area, theme, onWin),
 };
 
+/** Icono y color de acento por temática (fallback para temas nuevos). */
+const THEME_STYLE = {
+    cine: { icon: '🎬', acc: '#ef4444' },
+    rock: { icon: '🎸', acc: '#7c5cff' },
+    biblia: { icon: '📖', acc: '#3b82f6' },
+    ochentas: { icon: '📼', acc: '#06b6d4' },
+};
+const DEFAULT_STYLE = { icon: '🎲', acc: '#7c5cff' };
+
 const THEME_KEY = 'brainArcadeTheme';
 
 function main() {
@@ -28,21 +38,71 @@ function main() {
         gameGrid: document.getElementById('game-grid'),
         themeTitle: document.getElementById('selected-theme-title'),
         modal: document.getElementById('modal-reward'),
+        timer: document.getElementById('game-timer'),
         levelDisplay: document.getElementById('level-display'),
+        levelBadge: document.getElementById('level-badge'),
         xpDisplay: document.getElementById('xp-display'),
+        xpFill: document.getElementById('xp-fill'),
+        soundToggle: document.getElementById('sound-toggle'),
         themeToggle: document.getElementById('theme-toggle'),
     };
 
     let currentThemeData = null;
     let currentGame = null;
+    let lastLevel = null;
+
+    // ---- Cronómetro del juego ---------------------------------------------
+    let timerId = null;
+    let timerStart = 0;
+    function startTimer() {
+        stopTimer();
+        timerStart = Date.now();
+        els.timer.textContent = '00:00';
+        timerId = setInterval(() => {
+            const s = Math.floor((Date.now() - timerStart) / 1000);
+            const mm = String(Math.floor(s / 60)).padStart(2, '0');
+            const ss = String(s % 60).padStart(2, '0');
+            els.timer.textContent = `${mm}:${ss}`;
+        }, 1000);
+    }
+    function stopTimer() {
+        if (timerId) clearInterval(timerId);
+        timerId = null;
+    }
+
+    // Habilita el audio en el primer gesto del usuario (política de autoplay).
+    window.addEventListener('pointerdown', () => sfx.unlock(), { once: true });
 
     // ---- Progreso de usuario --------------------------------------------------
     const userManager = new UserManager({
         onChange: (data) => {
-            els.levelDisplay.textContent = `Nivel: ${data.level}`;
-            els.xpDisplay.textContent = `XP: ${data.xp} / ${data.level * 100}`;
+            els.levelDisplay.textContent = data.level;
+
+            const floor = (data.level - 1) * XP_PER_LEVEL;
+            const inLevel = data.xp - floor;
+            els.xpDisplay.textContent = `${inLevel} / ${XP_PER_LEVEL}`;
+            els.xpFill.style.width = `${Math.min(100, (inLevel / XP_PER_LEVEL) * 100)}%`;
+
+            if (lastLevel !== null && data.level > lastLevel) {
+                els.levelBadge.classList.remove('pulse');
+                void els.levelBadge.offsetWidth;
+                els.levelBadge.classList.add('pulse');
+            }
+            lastLevel = data.level;
+
             renderGameLocks(data.level);
         },
+    });
+
+    // ---- Sonido -------------------------------------------------------------
+    const syncSoundIcon = () => {
+        els.soundToggle.textContent = sfx.muted ? '🔇' : '🔊';
+        els.soundToggle.classList.toggle('is-off', sfx.muted);
+    };
+    syncSoundIcon();
+    els.soundToggle.addEventListener('click', () => {
+        sfx.toggle();
+        syncSoundIcon();
     });
 
     // ---- Modo oscuro (persistente + respeta el sistema) ----------------------
@@ -50,6 +110,7 @@ function main() {
     els.themeToggle.addEventListener('click', () => {
         const dark = document.body.classList.toggle('dark-mode');
         els.themeToggle.textContent = dark ? '☀️' : '🌙';
+        sfx.play('click');
         try {
             localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
         } catch { /* almacenamiento no disponible */ }
@@ -75,11 +136,16 @@ function main() {
 
     const themeFragment = document.createDocumentFragment();
     for (const key of themeKeys) {
+        const { icon, acc } = THEME_STYLE[key] ?? DEFAULT_STYLE;
         const card = document.createElement('button');
         card.type = 'button';
         card.className = 'card';
-        card.innerHTML = `<div class="icon" aria-hidden="true">📁</div><h3>${key.toUpperCase()}</h3>`;
-        card.addEventListener('click', () => selectTheme(key));
+        card.style.setProperty('--acc', acc);
+        card.innerHTML = `<div class="icon" aria-hidden="true">${icon}</div><h3>${key.toUpperCase()}</h3>`;
+        card.addEventListener('click', () => {
+            sfx.play('click');
+            selectTheme(key);
+        });
         themeFragment.appendChild(card);
     }
     els.themeGrid.appendChild(themeFragment);
@@ -100,12 +166,14 @@ function main() {
     }
 
     function endGame() {
+        stopTimer();
         currentGame?.destroy?.();
         currentGame = null;
         els.gameArea.innerHTML = '';
     }
 
     document.getElementById('back-to-themes').addEventListener('click', () => {
+        sfx.play('click');
         showView(els.themeSelector);
         currentThemeData = null;
     });
@@ -113,6 +181,7 @@ function main() {
     document.getElementById('exit-game').addEventListener('click', () => {
         const inProgress = currentGame && !currentGame.solved;
         if (inProgress && !confirm('¿Seguro que quieres salir? Perderás el progreso actual.')) return;
+        sfx.play('click');
         endGame();
         showView(els.gameSelector);
     });
@@ -132,12 +201,8 @@ function main() {
 
     els.gameGrid.addEventListener('click', (e) => {
         const card = e.target.closest('.game-card');
-        if (!card) return;
-        if (card.classList.contains('locked')) {
-            const required = GAME_UNLOCK_LEVEL[card.dataset.game] ?? 1;
-            alert(`Necesitas el nivel ${required} para desbloquear este juego.`);
-            return;
-        }
+        if (!card || card.classList.contains('locked')) return;
+        sfx.play('click');
         startGame(card.dataset.game);
     });
 
@@ -156,11 +221,17 @@ function main() {
 
         showView(els.gameContainer);
         els.gameArea.innerHTML = '';
+        startTimer();
 
         const onWin = (xp) => {
+            stopTimer();
             const prevLevel = userManager.data.level;
             userManager.addXP(xp);
             const leveledUp = userManager.data.level > prevLevel;
+
+            sfx.play(leveledUp ? 'levelup' : 'win');
+            celebrate({ y: 0.35, count: leveledUp ? 220 : 150 });
+
             showRewardModal(
                 xp,
                 leveledUp ? `¡Nivel ${userManager.data.level}!` : undefined,
@@ -191,8 +262,8 @@ function main() {
     }
 
     document.getElementById('close-modal').addEventListener('click', () => {
+        sfx.play('click');
         els.modal.classList.add('hidden');
-        // Solo volvemos al menú si veníamos de terminar un juego.
         if (currentGame) {
             endGame();
             showView(els.gameSelector);

@@ -1,5 +1,6 @@
 import { shuffle } from '../utils.js';
 import { GAME_REWARDS } from '../config.js';
+import { sfx } from '../fx.js';
 
 export class MemoryGame {
     constructor(container, themeData, onComplete) {
@@ -46,6 +47,7 @@ export class MemoryGame {
         card.classList.add('flipped');
         card.textContent = card.dataset.value;
         card.setAttribute('aria-label', `Carta ${card.dataset.value}`);
+        sfx.play('flip');
         this.flipped.push(card);
 
         if (this.flipped.length === 2) this.checkMatch();
@@ -59,12 +61,14 @@ export class MemoryGame {
             c2.classList.add('matched');
             this.flipped = [];
             this.matches++;
+            sfx.play('match');
             if (this.matches === this.pairs) {
                 this.solved = true;
                 setTimeout(() => this.onComplete(GAME_REWARDS.memory), 400);
             }
         } else {
             this.locked = true;
+            sfx.play('wrong');
             setTimeout(() => {
                 for (const c of [c1, c2]) {
                     c.classList.remove('flipped');

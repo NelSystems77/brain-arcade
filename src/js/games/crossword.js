@@ -1,4 +1,5 @@
 import { GAME_REWARDS } from '../config.js';
+import { sfx, shake } from '../fx.js';
 
 export class CrosswordGame {
     constructor(container, themeData, onComplete) {
@@ -137,6 +138,8 @@ export class CrosswordGame {
             this.feedback.className = 'feedback feedback--warn';
             this.feedback.textContent = 'Faltan letras por llenar.';
         } else if (errors > 0) {
+            sfx.play('wrong');
+            shake(this.container);
             this.feedback.className = 'feedback feedback--err';
             this.feedback.textContent = `Tienes ${errors} ${errors === 1 ? 'error' : 'errores'}.`;
         } else {

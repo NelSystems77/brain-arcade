@@ -1,5 +1,6 @@
 import { shuffle, randomItem } from '../utils.js';
 import { GAME_REWARDS } from '../config.js';
+import { sfx, shake } from '../fx.js';
 
 export class AnagramGame {
     constructor(container, themeData, onComplete) {
@@ -51,10 +52,13 @@ export class AnagramGame {
 
         if (this.normalize(this.input.value) === this.normalize(this.currentWord)) {
             this.solved = true;
+            sfx.play('match');
             this.feedback.className = 'feedback feedback--ok';
             this.feedback.textContent = '¡Correcto!';
             setTimeout(() => this.onComplete(GAME_REWARDS.anagrams), 900);
         } else {
+            sfx.play('wrong');
+            shake(this.container);
             this.feedback.className = 'feedback feedback--err';
             this.feedback.textContent = 'Intenta de nuevo.';
         }

@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="BrainArcade: colección modular de puzzles — anagramas, memoria visual, sudoku y crucigrama — con niveles y XP.">
-    <meta name="theme-color" content="#6c63ff">
+    <meta name="theme-color" content="#7c5cff">
     <title>BrainArcade - Puzzles Modulares</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%A0%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;700;800&display=swap">
     <link rel="stylesheet" href="./app.css">
     <script defer src="./app.js"></script>
 </head>
@@ -15,8 +18,14 @@
     <header id="app-header">
         <div class="logo">BrainArcade 🎮</div>
         <div class="status-bar">
-            <span id="level-display">Nivel: 1</span>
-            <span id="xp-display">XP: 0 / 100</span>
+            <div class="level-badge" id="level-badge" title="Nivel">
+                <span id="level-display">1</span>
+            </div>
+            <div class="xp-meter" title="Experiencia">
+                <div class="xp-meter__track"><div class="xp-meter__fill" id="xp-fill"></div></div>
+                <span class="xp-meter__label" id="xp-display">0 / 100</span>
+            </div>
+            <button id="sound-toggle" class="btn-icon" title="Sonido" aria-label="Activar o silenciar sonido">🔊</button>
             <button id="theme-toggle" class="btn-icon" title="Modo Oscuro/Claro" aria-label="Cambiar tema">🌙</button>
         </div>
     </header>
@@ -24,6 +33,7 @@
     <main>
         <section id="theme-selector" class="view active">
             <h2>Elige tu Temática</h2>
+            <p class="view-sub">Elige, juega y sube de nivel 🚀</p>
             <div class="grid-container" id="theme-grid"></div>
         </section>
 
@@ -34,28 +44,28 @@
             </div>
 
             <div class="grid-container" id="game-grid">
-                <button type="button" class="card game-card" data-game="anagrams">
+                <button type="button" class="card game-card" data-game="anagrams" style="--acc:#ff5da2">
                     <div class="icon" aria-hidden="true">🔠</div>
                     <h3>Anagramas</h3>
                     <p>Ordena las letras</p>
                     <p class="lock-hint"></p>
                 </button>
 
-                <button type="button" class="card game-card" data-game="memory">
+                <button type="button" class="card game-card" data-game="memory" style="--acc:#7c5cff">
                     <div class="icon" aria-hidden="true">🧠</div>
                     <h3>Memoria Visual</h3>
                     <p>Encuentra los pares</p>
                     <p class="lock-hint"></p>
                 </button>
 
-                <button type="button" class="card game-card" data-game="sudoku">
+                <button type="button" class="card game-card" data-game="sudoku" style="--acc:#3b82f6">
                     <div class="icon" aria-hidden="true">🔢</div>
                     <h3>Sudoku</h3>
                     <p>Lógica numérica</p>
                     <p class="lock-hint"></p>
                 </button>
 
-                <button type="button" class="card game-card" data-game="crossword">
+                <button type="button" class="card game-card" data-game="crossword" style="--acc:#22c55e">
                     <div class="icon" aria-hidden="true">✏️</div>
                     <h3>Crucigrama</h3>
                     <p>Palabras cruzadas</p>
