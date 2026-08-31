@@ -7,6 +7,20 @@ export const GAME_DATA = {
             { word: "BATMAN", clue: "El caballero de la noche", startX: 1, startY: 3, direction: "horizontal" },
             { word: "AVATAR", clue: "Película de seres azules", startX: 2, startY: 3, direction: "vertical" }, 
             { word: "MATRIX", clue: "Vivimos en una simulación", startX: 4, startY: 3, direction: "vertical" }
+        ],
+        trivia: [
+            { question: "¿Quién dirigió 'Titanic' (1997)?", options: ["James Cameron", "Steven Spielberg", "Ridley Scott", "Martin Scorsese"], answer: 0 },
+            { question: "¿En qué saga se dice 'Que la Fuerza te acompañe'?", options: ["Star Wars", "Star Trek", "Dune", "Alien"], answer: 0 },
+            { question: "¿Qué actor interpreta a Jack Sparrow?", options: ["Johnny Depp", "Orlando Bloom", "Brad Pitt", "Tom Cruise"], answer: 0 },
+            { question: "¿Qué estudio creó 'Toy Story'?", options: ["Pixar", "DreamWorks", "Blue Sky", "Illumination"], answer: 0 },
+            { question: "¿Qué película ganó el Óscar a Mejor Película en 2020?", options: ["Parásitos", "1917", "Joker", "El irlandés"], answer: 0 },
+            { question: "¿Qué tipo de pez es Nemo?", options: ["Pez payaso", "Pez cirujano", "Pez globo", "Pez ángel"], answer: 0 },
+            { question: "¿Quién dirigió 'Pulp Fiction'?", options: ["Quentin Tarantino", "Robert Rodríguez", "Guy Ritchie", "David Fincher"], answer: 0 },
+            { question: "En 'Matrix', ¿qué pastilla elige Neo?", options: ["La roja", "La azul", "La verde", "La blanca"], answer: 0 },
+            { question: "¿Qué superhéroe protege Ciudad Gótica?", options: ["Batman", "Superman", "Spider-Man", "Flash"], answer: 0 },
+            { question: "¿Cómo se llama el hobbit que lleva el Anillo Único?", options: ["Frodo", "Bilbo", "Sam", "Pippin"], answer: 0 },
+            { question: "¿En qué película viaja la gente en el tiempo en un DeLorean?", options: ["Regreso al Futuro", "Interestelar", "El Origen", "Looper"], answer: 0 },
+            { question: "¿Quién compuso la música incidental de 'El Rey León' (1994)?", options: ["Hans Zimmer", "John Williams", "Danny Elfman", "Alan Silvestri"], answer: 0 }
         ]
     },
 
@@ -36,9 +50,23 @@ export const GAME_DATA = {
             { 
                 word: "QUEEN", 
                 clue: "Banda de Freddie Mercury", 
-                startX: 0, startY: 6, 
-                direction: "horizontal" 
+                startX: 0, startY: 6,
+                direction: "horizontal"
             }
+        ],
+        trivia: [
+            { question: "¿Qué banda grabó 'The Dark Side of the Moon'?", options: ["Pink Floyd", "Led Zeppelin", "The Who", "Genesis"], answer: 0 },
+            { question: "¿Quién fue el vocalista de Queen?", options: ["Freddie Mercury", "Brian May", "Roger Taylor", "John Deacon"], answer: 0 },
+            { question: "¿De qué ciudad son The Beatles?", options: ["Liverpool", "Londres", "Mánchester", "Birmingham"], answer: 0 },
+            { question: "¿Qué banda grabó 'Enter Sandman'?", options: ["Metallica", "Megadeth", "Slayer", "Anthrax"], answer: 0 },
+            { question: "¿Quién fue el líder y vocalista de Nirvana?", options: ["Kurt Cobain", "Dave Grohl", "Krist Novoselic", "Eddie Vedder"], answer: 0 },
+            { question: "¿Qué banda australiana canta 'Highway to Hell'?", options: ["AC/DC", "INXS", "Midnight Oil", "Jet"], answer: 0 },
+            { question: "¿Qué instrumento tocaba John Bonham en Led Zeppelin?", options: ["Batería", "Bajo", "Guitarra", "Teclado"], answer: 0 },
+            { question: "¿De qué banda es el álbum 'Nevermind' (1991)?", options: ["Nirvana", "Pearl Jam", "Soundgarden", "Alice in Chains"], answer: 0 },
+            { question: "¿Quién es el cantante de U2?", options: ["Bono", "The Edge", "Adam Clayton", "Larry Mullen"], answer: 0 },
+            { question: "¿Cuál es el logo de The Rolling Stones?", options: ["Una lengua y labios", "Un rayo", "Una corona", "Un ala"], answer: 0 },
+            { question: "¿Quién tocaba la guitarra en 'The Jimi Hendrix Experience'?", options: ["Jimi Hendrix", "Eric Clapton", "Jimmy Page", "Jeff Beck"], answer: 0 },
+            { question: "¿Qué grupo lanzó 'Bohemian Rhapsody'?", options: ["Queen", "Deep Purple", "Kansas", "Boston"], answer: 0 }
         ]
     },
 
@@ -68,9 +96,23 @@ export const GAME_DATA = {
             { 
                 word: "GOLIAT", 
                 clue: "Gigante filisteo", 
-                startX: 1, startY: 4, 
-                direction: "horizontal" 
+                startX: 1, startY: 4,
+                direction: "horizontal"
             }
+        ],
+        trivia: [
+            { question: "¿Cuál es el primer libro de la Biblia?", options: ["Génesis", "Éxodo", "Salmos", "Juan"], answer: 0 },
+            { question: "¿Quién construyó un arca para sobrevivir al diluvio?", options: ["Noé", "Moisés", "Abraham", "David"], answer: 0 },
+            { question: "¿A quién venció David con una honda?", options: ["Goliat", "Sansón", "Saúl", "El faraón"], answer: 0 },
+            { question: "¿Cuántos días duró la creación antes del descanso?", options: ["6", "7", "3", "40"], answer: 0 },
+            { question: "¿Quién guió a Israel fuera de Egipto?", options: ["Moisés", "Josué", "Aarón", "Jacob"], answer: 0 },
+            { question: "¿Cuántos apóstoles eligió Jesús?", options: ["12", "10", "7", "3"], answer: 0 },
+            { question: "¿En qué ciudad nació Jesús según los evangelios?", options: ["Belén", "Nazaret", "Jerusalén", "Capernaúm"], answer: 0 },
+            { question: "¿Quién fue tragado por un gran pez?", options: ["Jonás", "Job", "Elías", "Daniel"], answer: 0 },
+            { question: "¿Cuál es el último libro de la Biblia?", options: ["Apocalipsis", "Malaquías", "Judas", "Hechos"], answer: 0 },
+            { question: "¿Quién negó a Jesús tres veces?", options: ["Pedro", "Judas", "Juan", "Tomás"], answer: 0 },
+            { question: "¿Qué recibió Moisés en el monte Sinaí?", options: ["Los Diez Mandamientos", "El maná", "El arca", "El cayado"], answer: 0 },
+            { question: "¿Qué rey de Israel, hijo de David, era famoso por su sabiduría?", options: ["Salomón", "Ezequías", "Josías", "Roboam"], answer: 0 }
         ]
     },
 
@@ -100,9 +142,23 @@ export const GAME_DATA = {
             { 
                 word: "ET", 
                 clue: "El extraterrestre que quería llamar a casa", 
-                startX: 7, startY: 3, 
-                direction: "vertical" 
+                startX: 7, startY: 3,
+                direction: "vertical"
             }
+        ],
+        trivia: [
+            { question: "¿Cómo se llama el extraterrestre peludo de la sitcom de los 80?", options: ["ALF", "E.T.", "Mork", "Gizmo"], answer: 0 },
+            { question: "En 'El coche fantástico', ¿cómo se llama el auto parlante?", options: ["KITT", "HAL", "K9", "Herbie"], answer: 0 },
+            { question: "¿Qué agente arreglaba todo con una navaja suiza?", options: ["MacGyver", "James Bond", "Magnum", "El Santo"], answer: 0 },
+            { question: "¿De qué planeta viene ALF?", options: ["Melmac", "Marte", "Vulcano", "Krypton"], answer: 0 },
+            { question: "¿Qué grupo de héroes vivía en las alcantarillas?", options: ["Las Tortugas Ninja", "Los Cazafantasmas", "Los Goonies", "Los ThunderCats"], answer: 0 },
+            { question: "¿Cómo se llamaba la consola de Nintendo de los 80?", options: ["NES", "PlayStation", "Mega Drive", "Atari Jaguar"], answer: 0 },
+            { question: "¿Quién era el líder de los Autobots en Transformers?", options: ["Optimus Prime", "Megatron", "Bumblebee", "Ironhide"], answer: 0 },
+            { question: "¿Quién interpretó al Chavo del Ocho?", options: ["Roberto Gómez Bolaños", "Carlos Villagrán", "Rubén Aguirre", "Ramón Valdés"], answer: 0 },
+            { question: "¿Qué serie animada tiene osos de colores con símbolos en la barriga?", options: ["Los Ositos Cariñositos", "Los Pitufos", "My Little Pony", "Los Fraggle"], answer: 0 },
+            { question: "¿Qué gato naranja y perezoso adora la lasaña?", options: ["Garfield", "Félix", "Tom", "Isidoro"], answer: 0 },
+            { question: "¿Qué película de 1984 tiene el lema 'Who you gonna call?'?", options: ["Los Cazafantasmas", "Gremlins", "Volver al Futuro", "Tron"], answer: 0 },
+            { question: "¿Qué muñeco NO debía mojarse ni comer después de medianoche?", options: ["Gizmo (Gremlins)", "Chucky", "Teddy Ruxpin", "Furby"], answer: 0 }
         ]
     }
 };

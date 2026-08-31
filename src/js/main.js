@@ -8,12 +8,14 @@ import { AnagramGame } from './games/anagrams.js';
 import { MemoryGame } from './games/memory.js';
 import { SudokuGame } from './games/sudoku.js';
 import { CrosswordGame } from './games/crossword.js';
+import { TriviaGame } from './games/trivia.js';
 
 const GAME_FACTORY = {
     anagrams: (area, theme, onWin) => new AnagramGame(area, theme, onWin),
     memory: (area, theme, onWin) => new MemoryGame(area, theme, onWin),
     sudoku: (area, theme, onWin, level) =>
         new SudokuGame(area, level >= SUDOKU_HARD_LEVEL ? 'hard' : 'easy', onWin),
+    trivia: (area, theme, onWin) => new TriviaGame(area, theme, onWin),
     crossword: (area, theme, onWin) => new CrosswordGame(area, theme, onWin),
 };
 
@@ -218,6 +220,10 @@ function main() {
             alert("Este tema aún no tiene un crucigrama diseñado. Prueba con 'CINE'.");
             return;
         }
+        if (type === 'trivia' && !(currentThemeData?.trivia?.length)) {
+            alert('Este tema aún no tiene preguntas de trivia.');
+            return;
+        }
 
         showView(els.gameContainer);
         els.gameArea.innerHTML = '';
@@ -228,6 +234,12 @@ function main() {
             const prevLevel = userManager.data.level;
             userManager.addXP(xp);
             const leveledUp = userManager.data.level > prevLevel;
+
+            if (xp <= 0) {
+                sfx.play('click');
+                showRewardModal(0, 'Ronda terminada', 'Sin aciertos esta vez — ¡inténtalo de nuevo!');
+                return;
+            }
 
             sfx.play(leveledUp ? 'levelup' : 'win');
             celebrate({ y: 0.35, count: leveledUp ? 220 : 150 });

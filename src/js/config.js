@@ -15,8 +15,15 @@ export const GAME_UNLOCK_LEVEL = {
     anagrams: 1,
     memory: 1,
     sudoku: 1,
+    trivia: 1,
     crossword: 10,
 };
 
 /** A partir de este nivel el Sudoku se genera en modo difícil. */
 export const SUDOKU_HARD_LEVEL = 5;
+
+/** Trivia: preguntas por ronda y XP por acierto. */
+export const TRIVIA = {
+    roundSize: 5,
+    xpPerCorrect: 12,
+};
