@@ -27,3 +27,9 @@ export const TRIVIA = {
     roundSize: 5,
     xpPerCorrect: 12,
 };
+
+/**
+ * Contador de visitas: URL del Worker de Cloudflare desplegado (ver workers/visits/).
+ * Vacío = contador desactivado. Ej.: 'https://brain-arcade-visits.TU-SUBDOMINIO.workers.dev'
+ */
+export const VISITS_ENDPOINT = '';

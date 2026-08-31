@@ -12,6 +12,7 @@ import { CrosswordGame } from './games/crossword.js';
 import { TriviaGame } from './games/trivia.js';
 import { makeRefranes, makeBombas, makeRetahilas } from './exercises/verbal.js';
 import { RecuerdasExercise } from './exercises/recuerdas.js';
+import { initVisitCounter } from './visits.js';
 
 const GAME_FACTORY = {
     anagrams: (area, theme, onWin) => new AnagramGame(area, theme, onWin),
@@ -404,6 +405,9 @@ function main() {
     els.modal.addEventListener('click', (e) => {
         if (e.target === els.modal) document.getElementById('close-modal').click();
     });
+
+    // ---- Contador de visitas (opcional, ver config.js) --------------------
+    initVisitCounter();
 }
 
 if (document.readyState === 'loading') {

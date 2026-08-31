@@ -24,9 +24,13 @@ src/
     speech.js          # lectura en voz alta (Web Speech API)
     exercises/         # Mente Activa: data.js (contenido) + choiceRound.js
                        #   + verbal.js (refranes/bombas/retahílas) + recuerdas.js
+    visits.js          # contador de visitas (opcional, ver workers/visits/)
     games/             # anagrams · memory · sudoku · trivia · crossword
                        #   API común: new Game(area, themeData, onWin).start() [+ destroy()]
+  assets/              # favicon.ico, logo.png, site.webmanifest (se copian a dist/)
 scripts/build.mjs      # build / dev server con esbuild (sin config)
+scripts/gen-favicon.mjs   # genera assets/favicon.ico desde logo.png
+workers/visits/        # Cloudflare Worker + KV para el contador de visitas
 .github/workflows/deploy.yml   # CI: build + deploy a GitHub Pages
 ```
 
@@ -47,6 +51,13 @@ npm run build    # genera ./dist (minificado)
 El workflow `deploy.yml` compila y publica `dist/` en cada push a `main`.
 **Requiere un cambio único de configuración:** en el repo, `Settings → Pages → Build and
 deployment → Source` debe estar en **GitHub Actions** (antes servía la raíz de la rama).
+
+## Contador de visitas (opcional)
+
+Endpoint propio, sin terceros ni cookies: un Cloudflare Worker + KV que guarda un
+entero global. El front hace un POST por sesión de pestaña y muestra el total en
+el footer. Desactivado mientras `VISITS_ENDPOINT` (en `config.js`) esté vacío.
+Pasos de despliegue en [`workers/visits/README.md`](workers/visits/README.md).
 
 ## Diseño ("Playful 3D")
 

@@ -1,0 +1,9 @@
+name = "brain-arcade-visits"
+main = "worker.js"
+compatibility_date = "2025-08-31"
+
+# El id se obtiene al crear el namespace (ver README.md de esta carpeta):
+#   npx wrangler kv namespace create VISITS
+kv_namespaces = [
+  { binding = "VISITS", id = "PON_AQUI_EL_ID_DEL_NAMESPACE" }
+]
