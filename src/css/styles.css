@@ -499,16 +499,28 @@ input.game-input:focus { outline: none; border-color: var(--primary); box-shadow
    ========================================= */
 .crossword-container { display: flex; flex-direction: column; align-items: center; gap: 18px; }
 .crossword-grid {
-    display: grid;
-    grid-template-columns: repeat(10, 30px);
-    grid-template-rows: repeat(10, 30px);
+    display: grid; /* grid-template lo fija el juego según el tamaño del puzzle */
     gap: 2px;
     background: var(--primary);
     padding: 6px;
     border-radius: 12px;
     box-shadow: 0 10px 0 var(--card-shadow), 0 18px 30px rgba(50, 30, 110, 0.16);
+    max-width: 100%;
 }
 .cw-cell-empty { background: transparent; }
+.cw-cell { position: relative; }
+.cw-num {
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    font-family: var(--font-main);
+    font-size: 9px;
+    font-weight: 800;
+    line-height: 1;
+    color: #1c1740;
+    pointer-events: none;
+    z-index: 2;
+}
 .cw-cell-input {
     width: 100%;
     height: 100%;
@@ -536,10 +548,12 @@ input.game-input:focus { outline: none; border-color: var(--primary); box-shadow
     width: 100%;
     box-shadow: 0 6px 0 var(--card-shadow), 0 12px 22px rgba(50, 30, 110, 0.12);
 }
-.clues-box h4 { margin: 0 0 8px; font-family: var(--font-display); color: var(--primary); }
+.clues-group + .clues-group { margin-top: 14px; }
+.clues-box h4 { margin: 0 0 8px; font-family: var(--font-display); color: var(--primary); font-size: 0.95rem; }
 .clues-box ul { list-style: none; padding: 0; margin: 0; font-size: 0.9rem; }
 .clues-box li { margin-bottom: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
-.clues-box li:last-child { border-bottom: none; }
+.clues-box li:last-child { border-bottom: none; margin-bottom: 0; }
+.clues-box li b { color: var(--primary); margin-right: 5px; }
 
 /* =========================================
    JUEGO: TRIVIA
@@ -650,7 +664,7 @@ input.game-input:focus { outline: none; border-color: var(--primary); box-shadow
     header { gap: 8px; padding: 0.7rem 12px; }
     .xp-meter { min-width: 74px; }
     .xp-meter__label { display: none; }
-    .crossword-grid { grid-template-columns: repeat(10, 27px); grid-template-rows: repeat(10, 27px); }
     .cw-cell-input { font-size: 12px; }
+    .cw-num { font-size: 8px; }
     .scrambled-word { font-size: 2rem; letter-spacing: 5px; }
 }

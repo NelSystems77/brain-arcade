@@ -81,9 +81,9 @@ function main() {
             els.levelDisplay.textContent = data.level;
 
             const floor = (data.level - 1) * XP_PER_LEVEL;
-            const inLevel = data.xp - floor;
+            const inLevel = Math.max(0, Math.min(XP_PER_LEVEL, data.xp - floor));
             els.xpDisplay.textContent = `${inLevel} / ${XP_PER_LEVEL}`;
-            els.xpFill.style.width = `${Math.min(100, (inLevel / XP_PER_LEVEL) * 100)}%`;
+            els.xpFill.style.width = `${(inLevel / XP_PER_LEVEL) * 100}%`;
 
             if (lastLevel !== null && data.level > lastLevel) {
                 els.levelBadge.classList.remove('pulse');
@@ -216,7 +216,7 @@ function main() {
             return;
         }
 
-        if (type === 'crossword' && !(currentThemeData?.crossword?.length)) {
+        if (type === 'crossword' && !(currentThemeData?.crosswords?.length)) {
             alert("Este tema aún no tiene un crucigrama diseñado. Prueba con 'CINE'.");
             return;
         }

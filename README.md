@@ -12,7 +12,7 @@ src/
   js/
     main.js            # punto de entrada: navegación, modales, tema
     config.js          # constantes (XP, recompensas, niveles de desbloqueo, trivia)
-    data.js            # temáticas y contenidos (cine, rock, biblia, 80s): anagramas, memoria, crucigrama, trivia
+    data.js            # temáticas y contenidos (cine, rock, biblia, 80s): anagramas, memoria, crucigramas, trivia
     userManager.js     # XP / nivel / localStorage
     utils.js           # shuffle (Fisher–Yates), randomItem
     sfx.js             # efectos de sonido sintetizados (WebAudio)
@@ -58,7 +58,8 @@ deployment → Source` debe estar en **GitHub Actions** (antes servía la raíz 
 - **Memoria Visual** — encuentra los 6 pares.
 - **Sudoku** — 9×9 generado (difícil desde nivel 5).
 - **Trivia** — 5 preguntas al azar de opción múltiple; 12 XP por acierto.
-- **Crucigrama** — palabras cruzadas (se desbloquea a nivel 10).
+- **Crucigrama** — 3 puzzles por temática (elegido al azar), con casillas
+  numeradas que coinciden con las pistas; se desbloquea a nivel 10.
 
 ## Qué se optimizó
 
