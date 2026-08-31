@@ -32,4 +32,4 @@ export const TRIVIA = {
  * Contador de visitas: URL del Worker de Cloudflare desplegado (ver workers/visits/).
  * Vacío = contador desactivado. Ej.: 'https://brain-arcade-visits.TU-SUBDOMINIO.workers.dev'
  */
-export const VISITS_ENDPOINT = '';
+export const VISITS_ENDPOINT = 'https://brain-arcade-visits.nelsystems77.workers.dev';
