@@ -78,7 +78,7 @@ body::after {
 body::before { background: var(--secondary); top: -16vmax; left: -12vmax; animation: float-a 22s ease-in-out infinite; }
 body::after { background: var(--primary); bottom: -16vmax; right: -12vmax; animation: float-b 27s ease-in-out infinite; }
 
-header, main, .modal, .confetti-canvas { position: relative; z-index: 1; }
+header, main, footer, .modal, .confetti-canvas { position: relative; z-index: 1; }
 
 @keyframes bg-pan {
     0%, 100% { background-position: 0% 50%, 0% 50%; }
@@ -107,14 +107,37 @@ header {
 }
 
 .logo {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+    white-space: nowrap;
+    animation: logo-wobble 6s ease-in-out infinite;
+}
+.logo__name {
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 1.4rem;
     color: var(--primary);
-    white-space: nowrap;
-    animation: logo-wobble 6s ease-in-out infinite;
+}
+.logo__by {
+    font-family: var(--font-main);
+    font-weight: 800;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 2px;
 }
 @keyframes logo-wobble { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+
+.brand-line {
+    text-align: center;
+    margin: 6px 0 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--muted);
+}
+.brand-line strong { color: var(--primary); }
 
 .status-bar { display: flex; gap: 12px; align-items: center; }
 
@@ -665,6 +688,36 @@ body.accessible .recuerda__probe { font-size: 6.5rem; }
 @keyframes icon-spin { from { transform: scale(0.2) rotate(-40deg); } }
 
 /* =========================================
+   FOOTER · marca
+   ========================================= */
+#app-footer {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 18px calc(16px + env(safe-area-inset-bottom));
+    font-family: var(--font-main);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--muted);
+    background: color-mix(in srgb, var(--card-bg) 70%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 2px solid color-mix(in srgb, var(--primary) 18%, transparent);
+}
+.app-footer__brand {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--primary);
+}
+.app-footer__sep { color: color-mix(in srgb, var(--muted) 60%, transparent); }
+
+body { display: flex; flex-direction: column; }
+body > main { flex: 1 0 auto; }
+
+/* =========================================
    ACCESIBILIDAD
    ========================================= */
 :focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
@@ -727,6 +780,9 @@ body.accessible *, body.accessible *::before, body.accessible *::after {
 
 body.accessible h2 { font-size: 2rem; }
 body.accessible .view-sub { font-size: 1.1rem; }
+body.accessible .brand-line { font-size: 1rem; }
+body.accessible #app-footer { font-size: 0.95rem; }
+body.accessible .logo__by { font-size: 0.72rem; }
 body.accessible .ma-cta { font-size: 1.15rem; max-width: 520px; }
 
 body.accessible .card { min-height: 210px; }
@@ -769,7 +825,9 @@ body.accessible :focus-visible { outline: 4px solid var(--primary); outline-offs
    RESPONSIVE
    ========================================= */
 @media (max-width: 480px) {
-    .logo { font-size: 1.15rem; }
+    .logo__name { font-size: 1.15rem; }
+    .logo__by { font-size: 0.58rem; }
+    #app-footer { font-size: 0.72rem; gap: 6px; }
     header { gap: 8px; padding: 0.7rem 12px; }
     .xp-meter { min-width: 74px; }
     .xp-meter__label { display: none; }

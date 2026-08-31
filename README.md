@@ -1,5 +1,7 @@
 # BrainArcade 🎮🧠
 
+> Un proyecto de **NelSystems**.
+
 Colección modular de puzzles en JavaScript vanilla: **anagramas**, **memoria visual**,
 **sudoku**, **trivia** y **crucigrama**, sobre 6 temáticas (cine, rock, biblia, 80s,
 ciencia, fútbol), con sistema de niveles, XP y progreso persistente.
@@ -98,3 +100,7 @@ regionales; editable/ampliable a mano).
 - **Accesibilidad**: tarjetas como `<button>`, `aria-live` en feedback, `role="dialog"`
   en el modal, `:focus-visible`, `prefers-reduced-motion`.
 - **Robustez**: `localStorage` envuelto en try/catch; carga de datos vacía controlada.
+
+## Créditos
+
+Desarrollado por **NelSystems**. Publicado bajo licencia MIT.

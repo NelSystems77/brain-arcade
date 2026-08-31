@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="BrainArcade: colección modular de puzzles — anagramas, memoria visual, sudoku y crucigrama — con niveles y XP.">
+    <meta name="author" content="NelSystems">
     <meta name="theme-color" content="#7c5cff">
     <title>BrainArcade - Puzzles Modulares</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%A0%3C/text%3E%3C/svg%3E">
@@ -16,7 +17,10 @@
 <body>
 
     <header id="app-header">
-        <div class="logo">BrainArcade 🎮</div>
+        <div class="logo">
+            <span class="logo__name">BrainArcade 🎮</span>
+            <span class="logo__by">by NelSystems</span>
+        </div>
         <div class="status-bar">
             <div class="level-badge" id="level-badge" title="Nivel">
                 <span id="level-display">1</span>
@@ -34,6 +38,7 @@
         <section id="theme-selector" class="view active">
             <h2>Elige tu Temática</h2>
             <p class="view-sub">Elige, juega y sube de nivel 🚀</p>
+            <p class="brand-line">Un proyecto de <strong>NelSystems</strong></p>
             <button type="button" id="mente-activa-cta" class="ma-cta"></button>
             <div class="grid-container" id="theme-grid"></div>
         </section>
@@ -121,6 +126,14 @@
             <div id="game-area"></div>
         </section>
     </main>
+
+    <footer id="app-footer">
+        <span class="app-footer__brand">BrainArcade</span>
+        <span class="app-footer__sep" aria-hidden="true">·</span>
+        <span>Hecho por NelSystems</span>
+        <span class="app-footer__sep" aria-hidden="true">·</span>
+        <span>© 2026</span>
+    </footer>
 
     <div id="modal-reward" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="reward-title">
         <div class="modal-content">
