@@ -15,6 +15,9 @@ src/
     data.js            # temáticas y contenidos (cine, rock, biblia, 80s)
     userManager.js     # XP / nivel / localStorage
     utils.js           # shuffle (Fisher–Yates), randomItem
+    sfx.js             # efectos de sonido sintetizados (WebAudio)
+    confetti.js        # confeti en canvas, sin dependencias
+    fx.js              # fachada: sfx + celebrate + shake
     games/             # una clase por juego, con API común: new Game(area, data, onWin).start()
 scripts/build.mjs      # build / dev server con esbuild (sin config)
 .github/workflows/deploy.yml   # CI: build + deploy a GitHub Pages
@@ -37,6 +40,16 @@ npm run build    # genera ./dist (minificado)
 El workflow `deploy.yml` compila y publica `dist/` en cada push a `main`.
 **Requiere un cambio único de configuración:** en el repo, `Settings → Pages → Build and
 deployment → Source` debe estar en **GitHub Actions** (antes servía la raíz de la rama).
+
+## Diseño ("Playful 3D")
+
+- Fondo con degradado animado y fuentes Fredoka / Nunito.
+- Tarjetas tipo *tile*: relieve 3D, rebote al pasar el ratón, acento de color
+  por temática, entrada escalonada.
+- Barra de XP animada + insignia de nivel con pulso al subir; cronómetro de partida.
+- **Efectos** (`sfx.js` / `confetti.js`): sonidos sintetizados con botón de silencio,
+  confeti al ganar y al subir de nivel, sacudida en errores. Todo hecho a mano, sin
+  librerías, y desactivado bajo `prefers-reduced-motion`.
 
 ## Qué se optimizó
 
