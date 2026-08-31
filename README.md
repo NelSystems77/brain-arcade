@@ -1,7 +1,7 @@
 # BrainArcade 🎮🧠
 
 Colección modular de puzzles en JavaScript vanilla: **anagramas**, **memoria visual**,
-**sudoku** y **crucigrama**, con sistema de niveles, XP y progreso persistente.
+**sudoku**, **trivia** y **crucigrama**, con sistema de niveles, XP y progreso persistente.
 
 ## Estructura
 
@@ -11,14 +11,15 @@ src/
   css/styles.css       # estilos (se empaqueta a dist/app.css)
   js/
     main.js            # punto de entrada: navegación, modales, tema
-    config.js          # constantes (XP, recompensas, niveles de desbloqueo)
-    data.js            # temáticas y contenidos (cine, rock, biblia, 80s)
+    config.js          # constantes (XP, recompensas, niveles de desbloqueo, trivia)
+    data.js            # temáticas y contenidos (cine, rock, biblia, 80s): anagramas, memoria, crucigrama, trivia
     userManager.js     # XP / nivel / localStorage
     utils.js           # shuffle (Fisher–Yates), randomItem
     sfx.js             # efectos de sonido sintetizados (WebAudio)
     confetti.js        # confeti en canvas, sin dependencias
     fx.js              # fachada: sfx + celebrate + shake
-    games/             # una clase por juego, con API común: new Game(area, data, onWin).start()
+    games/             # anagrams · memory · sudoku · trivia · crossword
+                       #   API común: new Game(area, themeData, onWin).start() [+ destroy()]
 scripts/build.mjs      # build / dev server con esbuild (sin config)
 .github/workflows/deploy.yml   # CI: build + deploy a GitHub Pages
 ```
@@ -50,6 +51,14 @@ deployment → Source` debe estar en **GitHub Actions** (antes servía la raíz 
 - **Efectos** (`sfx.js` / `confetti.js`): sonidos sintetizados con botón de silencio,
   confeti al ganar y al subir de nivel, sacudida en errores. Todo hecho a mano, sin
   librerías, y desactivado bajo `prefers-reduced-motion`.
+
+## Juegos
+
+- **Anagramas** — ordena las letras de un título/nombre del tema.
+- **Memoria Visual** — encuentra los 6 pares.
+- **Sudoku** — 9×9 generado (difícil desde nivel 5).
+- **Trivia** — 5 preguntas al azar de opción múltiple; 12 XP por acierto.
+- **Crucigrama** — palabras cruzadas (se desbloquea a nivel 10).
 
 ## Qué se optimizó
 
