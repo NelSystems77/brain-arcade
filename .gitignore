@@ -5,3 +5,6 @@ dist/
 Thumbs.db
 .vscode/
 .idea/
+
+# scripts de prueba temporales
+_*.mjs
