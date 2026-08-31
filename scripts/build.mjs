@@ -5,7 +5,7 @@ import { cpSync, mkdirSync, rmSync } from 'node:fs';
 const serve = process.argv.includes('--serve');
 const OUTDIR = 'dist';
 
-/** Copia el HTML (y cualquier estático futuro) al outdir tras cada build. */
+/** Copia el HTML y los estáticos (favicon, manifest, íconos) al outdir tras cada build. */
 const copyStatic = {
     name: 'copy-static',
     setup(build) {
@@ -13,6 +13,7 @@ const copyStatic = {
             if (result.errors.length) return;
             mkdirSync(OUTDIR, { recursive: true });
             cpSync('src/index.html', `${OUTDIR}/index.html`);
+            cpSync('src/assets', `${OUTDIR}/assets`, { recursive: true });
         });
     },
 };
