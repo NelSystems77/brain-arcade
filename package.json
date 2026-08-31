@@ -1,0 +1,15 @@
+{
+  "name": "brain-arcade",
+  "version": "1.0.0",
+  "description": "Colección modular de puzzles (anagramas, memoria visual, sudoku y crucigrama) en JavaScript vanilla, con sistema de niveles y XP.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "node scripts/build.mjs --serve",
+    "build": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

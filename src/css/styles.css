@@ -65,6 +65,9 @@ header {
 
 .card {
     background: var(--card-bg);
+    color: inherit;
+    font: inherit;
+    width: 100%;
     padding: 20px;
     border-radius: 12px;
     text-align: center;
@@ -80,7 +83,10 @@ header {
 .card .icon { font-size: 2.5rem; margin-bottom: 10px; }
 .card h3 { margin: 5px 0; font-size: 1.1rem; }
 .card p { margin: 0; font-size: 0.85rem; opacity: 0.7; }
+.card .lock-hint { color: var(--secondary); opacity: 1; font-weight: bold; }
+.card .lock-hint:empty { display: none; }
 .card.locked { opacity: 0.6; cursor: not-allowed; filter: grayscale(1); }
+.card.locked:hover { transform: none; border-color: transparent; }
 
 /* =========================================
    BOTONES Y COMPONENTES
@@ -207,6 +213,26 @@ body.dark-mode .sudoku-cell.fixed { background-color: #333; color: #fff; }
 .modal-icon { font-size: 4rem; margin-bottom: 15px; }
 
 @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* =========================================
+   FEEDBACK DE JUEGOS
+   ========================================= */
+.feedback { min-height: 1.2em; margin: 10px 0 0; font-weight: bold; }
+.feedback--ok   { color: var(--accent); }
+.feedback--err  { color: var(--secondary); }
+.feedback--warn { color: #f9a825; }
+
+/* =========================================
+   ACCESIBILIDAD
+   ========================================= */
+:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
 
 /* RESPONSIVE */
 @media (max-width: 450px) {

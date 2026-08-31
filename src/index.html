@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BrainArcade: colección modular de puzzles — anagramas, memoria visual, sudoku y crucigrama — con niveles y XP.">
+    <meta name="theme-color" content="#6c63ff">
+    <title>BrainArcade - Puzzles Modulares</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%A0%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="./app.css">
+    <script defer src="./app.js"></script>
+</head>
+<body>
+
+    <header id="app-header">
+        <div class="logo">BrainArcade 🎮</div>
+        <div class="status-bar">
+            <span id="level-display">Nivel: 1</span>
+            <span id="xp-display">XP: 0 / 100</span>
+            <button id="theme-toggle" class="btn-icon" title="Modo Oscuro/Claro" aria-label="Cambiar tema">🌙</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="theme-selector" class="view active">
+            <h2>Elige tu Temática</h2>
+            <div class="grid-container" id="theme-grid"></div>
+        </section>
+
+        <section id="game-selector" class="view hidden">
+            <div class="selector-header">
+                <button id="back-to-themes" class="btn-small">⬅ Volver</button>
+                <h2 id="selected-theme-title">Selecciona un Reto</h2>
+            </div>
+
+            <div class="grid-container" id="game-grid">
+                <button type="button" class="card game-card" data-game="anagrams">
+                    <div class="icon" aria-hidden="true">🔠</div>
+                    <h3>Anagramas</h3>
+                    <p>Ordena las letras</p>
+                    <p class="lock-hint"></p>
+                </button>
+
+                <button type="button" class="card game-card" data-game="memory">
+                    <div class="icon" aria-hidden="true">🧠</div>
+                    <h3>Memoria Visual</h3>
+                    <p>Encuentra los pares</p>
+                    <p class="lock-hint"></p>
+                </button>
+
+                <button type="button" class="card game-card" data-game="sudoku">
+                    <div class="icon" aria-hidden="true">🔢</div>
+                    <h3>Sudoku</h3>
+                    <p>Lógica numérica</p>
+                    <p class="lock-hint"></p>
+                </button>
+
+                <button type="button" class="card game-card" data-game="crossword">
+                    <div class="icon" aria-hidden="true">✏️</div>
+                    <h3>Crucigrama</h3>
+                    <p>Palabras cruzadas</p>
+                    <p class="lock-hint"></p>
+                </button>
+            </div>
+        </section>
+
+        <section id="game-container" class="view hidden">
+            <div class="game-header">
+                <button id="exit-game" class="btn-small">❌ Salir</button>
+                <span id="game-timer">--:--</span>
+            </div>
+            <div id="game-area"></div>
+        </section>
+    </main>
+
+    <div id="modal-reward" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="reward-title">
+        <div class="modal-content">
+            <div class="modal-icon" aria-hidden="true">🏆</div>
+            <h3 id="reward-title">¡Genial!</h3>
+            <p id="reward-msg">+50 XP</p>
+            <button id="close-modal" class="btn-primary">Continuar</button>
+        </div>
+    </div>
+
+</body>
+</html>
