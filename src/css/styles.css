@@ -917,3 +917,11 @@ body.accessible :focus-visible { outline: 4px solid var(--primary); outline-offs
 .dsp-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px 12px; margin: 22px 0 6px; }
 .dsp-actions button:disabled { opacity: 0.45; cursor: default; filter: grayscale(0.4); }
 .dsp-hint { max-width: 460px; margin: 10px auto 0; font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
+
+/* Botella llena: destello cálido y breve. */
+.bt.full-pop { animation: dsp-full 1.2s ease-out; }
+@keyframes dsp-full {
+    0% { filter: drop-shadow(0 0 0 rgba(255, 236, 160, 0)); }
+    35% { filter: drop-shadow(0 0 14px rgba(255, 236, 160, 0.95)); }
+    100% { filter: drop-shadow(0 0 0 rgba(255, 236, 160, 0)); }
+}

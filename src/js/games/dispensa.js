@@ -257,8 +257,10 @@ export class DispensaGame {
         }
     }
 
+    /** Destino rechazado: si está lleno suena "no cabe más", si no, el "hum" genérico. */
     deny(c) {
-        asmr.deny();
+        if (c.units.length >= c.cap) asmr.blocked();
+        else asmr.deny();
         shake(c.el);
     }
 
@@ -311,6 +313,12 @@ export class DispensaGame {
 
         this.stream?.remove();
         asmr.settle();
+        // El frasco central lo celebra la victoria; las botellas, este detalle.
+        if (!dst.isGiant && dst.units.length === dst.cap) {
+            asmr.full();
+            dstEl.classList.add('full-pop');
+            setTimeout(() => dstEl.classList.remove('full-pop'), 1400);
+        }
         el.style.transform = '';
         await sleep(this.moveMs());
         if (this.dead) return;

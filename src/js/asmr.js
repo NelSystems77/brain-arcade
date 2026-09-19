@@ -215,6 +215,18 @@ export const asmr = {
         ping(b, { freq: 196, dur: 0.3, vol: 0.07, type: 'triangle', slideTo: 165, wet: 0.4 });
     }),
 
+    /** Envase lleno "a tope": tres notas de cristal que suben, como un suspiro de satisfacción. */
+    full: guarded((b) => {
+        [2, 3, 5].forEach((n, i) => bell(b, PENTA[n], { vol: 0.045, dur: 1.5, delay: 0.32 + i * 0.11 }));
+    }),
+
+    /** Envase ya lleno, no cabe más: dos notas suaves que bajan, un "mmm" amable. */
+    blocked: guarded((b) => {
+        ping(b, { freq: 392, dur: 0.32, vol: 0.06, wet: 0.5 });
+        ping(b, { freq: 330, dur: 0.42, vol: 0.055, delay: 0.13, wet: 0.5 });
+        tick(b, { freq: 900, dur: 0.05, vol: 0.02 });
+    }),
+
     /**
      * Agua cayendo. `from`/`to` = nivel de llenado (0-1) del destino: el tono
      * sube mientras se llena, como en la vida real.
