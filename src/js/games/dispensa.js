@@ -378,8 +378,9 @@ export class DispensaGame {
     }
 
     reset() {
-        this.loadBottles(JSON.parse(this.initial), []);
         this.setSelected(null);
+        this.loadBottles(JSON.parse(this.initial), []);
+        this.buildDom(); // los recipientes nuevos necesitan sus elementos
         asmr.settle();
         this.render();
     }
