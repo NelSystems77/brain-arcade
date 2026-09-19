@@ -8,6 +8,7 @@ export const GAME_REWARDS = {
     memory: 50,
     sudoku: 100,
     crossword: 100,
+    dispensa: 80,
 };
 
 /** Nivel mínimo para desbloquear cada juego. */
@@ -16,6 +17,7 @@ export const GAME_UNLOCK_LEVEL = {
     memory: 1,
     sudoku: 1,
     trivia: 1,
+    dispensa: 1,
     crossword: 10,
 };
 

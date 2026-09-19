@@ -50,8 +50,19 @@ const SOUNDS = {
     levelup: () => arpeggio([392, 523, 659, 784, 1047], { type: 'square', step: 0.08, vol: 0.13 }),
 };
 
+const muteListeners = new Set();
+
 export const sfx = {
     get muted() { return muted; },
+
+    /** AudioContext compartido (ignora el silencio; quien lo use debe consultar `muted`). */
+    context() { return audio(); },
+
+    /** Avisa cuando se activa/desactiva el silencio. Devuelve la función para desuscribirse. */
+    onMuteChange(fn) {
+        muteListeners.add(fn);
+        return () => muteListeners.delete(fn);
+    },
 
     /** Debe llamarse desde un handler de evento de usuario para habilitar el audio. */
     unlock() { audio(); },
@@ -64,6 +75,7 @@ export const sfx = {
     toggle() {
         muted = !muted;
         try { localStorage.setItem(MUTE_KEY, muted ? '1' : '0'); } catch { /* noop */ }
+        for (const fn of muteListeners) fn(muted);
         if (!muted) this.play('click');
         return muted;
     },
