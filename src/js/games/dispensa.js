@@ -1,14 +1,16 @@
-import { GAME_REWARDS } from '../config.js';
+import { DISPENSA_XP } from '../config.js';
 import { shake } from '../fx.js';
 import { asmr } from '../asmr.js';
 import {
-    BOTTLE_CAP, SIDE_SLOTS, UNITS_PER_COLOR, LIQUIDS,
-    colorsForLevel, generate, planPour,
+    BOTTLE_CAP, SIDE_SLOTS, LIQUIDS, DIFFICULTIES,
+    difficultyForLevel, generate, planPour,
 } from './dispensaLogic.js';
 
 const LIQUID = Object.fromEntries(LIQUIDS.map((l) => [l.id, l]));
 const TILT = 62; // grados al verter
 const DRAG_PX = 7; // movimiento mínimo para considerarlo arrastre
+const DIFF_KEY = 'brainArcadeDispensaDiff';
+const stars = (n) => '★'.repeat(n) + '☆'.repeat(5 - n);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /**
@@ -20,12 +22,23 @@ export class DispensaGame {
     constructor(container, onComplete, level = 1) {
         this.container = container;
         this.onComplete = onComplete;
-        this.colors = colorsForLevel(level);
+        // Dificultad: la que el jugador eligió con el botón (si lo hizo); si no, según su nivel.
+        this.difficulty = this.savedDifficulty() ?? difficultyForLevel(level);
+        this.cfg = DIFFICULTIES[this.difficulty - 1];
         this.solved = false;
         this.busy = false;
         this.dead = false;
         this.target = null;
         this.selected = null;
+    }
+
+    savedDifficulty() {
+        try {
+            const n = Number(localStorage.getItem(DIFF_KEY));
+            return n >= 1 && n <= DIFFICULTIES.length ? n : null;
+        } catch {
+            return null;
+        }
     }
 
     start() {
@@ -43,7 +56,7 @@ export class DispensaGame {
 
     // ---- Estado -----------------------------------------------------------
     newLayout(prevTarget) {
-        const g = generate(this.colors, prevTarget);
+        const g = generate(this.cfg, prevTarget);
         this.target = g.target;
         this.initial = JSON.stringify(g.bottles);
         this.loadBottles(g.bottles, []);
@@ -51,7 +64,7 @@ export class DispensaGame {
 
     loadBottles(bottles, giantUnits) {
         this.side = bottles.map((units) => ({ units: [...units], cap: BOTTLE_CAP }));
-        this.giant = { units: [...giantUnits], cap: UNITS_PER_COLOR, only: this.target, isGiant: true };
+        this.giant = { units: [...giantUnits], cap: this.cfg.units, only: this.target, isGiant: true };
         this.all = [...this.side, this.giant];
         this.moves = 0;
         this.history = [];
@@ -63,11 +76,23 @@ export class DispensaGame {
         const liq = LIQUID[this.target];
         this.container.innerHTML = `
             <div class="dsp">
-                <div class="dsp-bar">
-                    <div class="dsp-target">Llena el frasco grande de
-                        <span class="dsp-swatch"></span><b class="dsp-target-name"></b></div>
-                    <div class="dsp-moves" aria-live="polite"></div>
+                <div class="dsp-top">
+                    <div class="dsp-bar">
+                        <div class="dsp-target">Llena el frasco grande de
+                            <span class="dsp-swatch"></span><b class="dsp-target-name"></b></div>
+                        <div class="dsp-moves" aria-live="polite"></div>
+                    </div>
+                    <div class="dsp-diffbar">
+                        <button type="button" class="btn-small dsp-diff-btn" data-act="diff" aria-expanded="false">
+                            🎚 Dificultad: <b>${this.cfg.name}</b> <span class="dsp-stars">${stars(this.difficulty)}</span></button>
+                        <div class="dsp-diff" hidden role="group" aria-label="Elegir dificultad">
+                            ${DIFFICULTIES.map((d, i) => `<button type="button" class="dsp-diff-opt${i + 1 === this.difficulty ? ' on' : ''}"
+                                data-diff="${i + 1}" title="${d.colors} colores · ${d.units} porciones de cada uno">
+                                <span>${d.name}</span><small>${stars(i + 1)}</small></button>`).join('')}
+                        </div>
+                    </div>
                 </div>
+                <p class="dsp-rotate">📱 Más cómodo en vertical. En horizontal, toca una botella y luego la otra.</p>
                 <div class="dsp-stage">
                     <div class="dsp-side dsp-left"></div>
                     <div class="dsp-mid"></div>
@@ -105,6 +130,34 @@ export class DispensaGame {
         makeSlot(this.root.querySelector('.dsp-mid'), this.giant, SIDE_SLOTS);
 
         this.bindEvents();
+        this.root.querySelector('.dsp-top').addEventListener('click', (e) => this.onTopClick(e));
+    }
+
+    /** Botón de dificultad y sus 5 opciones. */
+    onTopClick(e) {
+        const toggle = e.target.closest('[data-act="diff"]');
+        if (toggle) {
+            const panel = this.root.querySelector('.dsp-diff');
+            panel.hidden = !panel.hidden;
+            toggle.setAttribute('aria-expanded', String(!panel.hidden));
+            asmr.place();
+            return;
+        }
+        const opt = e.target.closest('[data-diff]');
+        if (opt && !this.busy) this.setDifficulty(Number(opt.dataset.diff));
+    }
+
+    setDifficulty(level) {
+        if (level === this.difficulty) {
+            this.root.querySelector('.dsp-diff').hidden = true;
+            return;
+        }
+        if (this.moves > 0 && !this.solved
+            && !confirm('Cambiar la dificultad empieza una mezcla nueva y pierdes el progreso. ¿Continuar?')) return;
+        this.difficulty = level;
+        this.cfg = DIFFICULTIES[level - 1];
+        try { localStorage.setItem(DIFF_KEY, String(level)); } catch { /* ignore */ }
+        this.reshuffle();
     }
 
     /** Dibuja las porciones de un recipiente (rachas del mismo color fusionadas). */
@@ -407,7 +460,7 @@ export class DispensaGame {
         this.giant.el.classList.add('done');
         asmr.chime();
         setTimeout(() => {
-            if (!this.dead) this.onComplete(GAME_REWARDS.dispensa);
+            if (!this.dead) this.onComplete(DISPENSA_XP[this.difficulty - 1]);
         }, 2000);
     }
 }

@@ -4,7 +4,6 @@ import { shuffle } from '../utils.js';
 
 export const BOTTLE_CAP = 4; // porciones por botella
 export const SIDE_SLOTS = 24; // 12 a cada lado del envase central
-export const UNITS_PER_COLOR = 16; // = capacidad del envase central
 
 /** Líquidos disponibles (orden = orden de aparición según dificultad). */
 export const LIQUIDS = [
@@ -15,29 +14,48 @@ export const LIQUIDS = [
     { id: 'matcha', name: 'Matcha', color: '#7ccf8f' },
 ];
 
-/** Cantidad de colores según el nivel del jugador (más colores = más reto). */
-export function colorsForLevel(level) {
-    if (level >= 8) return 5;
-    if (level >= 3) return 4;
-    return 3;
+/**
+ * Niveles de dificultad (los elige el jugador con el botón). Cada uno define
+ * cuántos colores hay, cuántas porciones de cada color (= capacidad del envase
+ * central) y en cuántas botellas se reparte (el resto quedan vacías: menos
+ * huecos libres = menos margen de maniobra).
+ */
+export const DIFFICULTIES = [
+    { name: 'Relajado', colors: 3, units: 8, filled: 8 },
+    { name: 'Fácil', colors: 3, units: 16, filled: 12 },
+    { name: 'Medio', colors: 4, units: 16, filled: 16 },
+    { name: 'Difícil', colors: 5, units: 16, filled: 20 },
+    { name: 'Experto', colors: 5, units: 16, filled: 22 },
+];
+
+/** Dificultad automática (1-5) según el nivel del jugador, si no eligió ninguna. */
+export function difficultyForLevel(level) {
+    if (level >= 8) return 4;
+    if (level >= 3) return 3;
+    return 2;
 }
 
 /**
- * Crea una mezcla: 24 botellas (cap 4) con `colors` líquidos y un color objetivo.
- * Los huecos libres (botellas vacías) garantizan que siempre haya maniobra.
+ * Crea una mezcla según `cfg` (una entrada de DIFFICULTIES): 24 botellas
+ * (cap 4) con líquidos revueltos y un color objetivo. Las porciones se reparten
+ * lo más parejo posible entre las botellas usadas.
  */
-export function generate(colors, prevTarget = null) {
-    const ids = LIQUIDS.slice(0, colors).map((l) => l.id);
+export function generate(cfg, prevTarget = null) {
+    const ids = LIQUIDS.slice(0, cfg.colors).map((l) => l.id);
     const units = [];
-    for (const id of ids) for (let i = 0; i < UNITS_PER_COLOR; i++) units.push(id);
+    for (const id of ids) for (let i = 0; i < cfg.units; i++) units.push(id);
 
     const mixed = shuffle(units);
-    const filled = mixed.length / BOTTLE_CAP;
-    const slots = shuffle([...Array(SIDE_SLOTS).keys()]).slice(0, filled);
+    const slots = shuffle([...Array(SIDE_SLOTS).keys()]).slice(0, cfg.filled);
+    const base = Math.floor(mixed.length / cfg.filled);
+    const extra = new Set(shuffle([...Array(cfg.filled).keys()]).slice(0, mixed.length - base * cfg.filled));
 
     const bottles = Array.from({ length: SIDE_SLOTS }, () => []);
+    let at = 0;
     slots.forEach((slot, i) => {
-        bottles[slot] = mixed.slice(i * BOTTLE_CAP, (i + 1) * BOTTLE_CAP);
+        const size = base + (extra.has(i) ? 1 : 0);
+        bottles[slot] = mixed.slice(at, at + size);
+        at += size;
     });
 
     const choices = ids.filter((id) => id !== prevTarget);

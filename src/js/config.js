@@ -8,8 +8,10 @@ export const GAME_REWARDS = {
     memory: 50,
     sudoku: 100,
     crossword: 100,
-    dispensa: 80,
 };
+
+/** Mi Dispensa: XP al completarla según la dificultad (1-5). */
+export const DISPENSA_XP = [50, 80, 100, 120, 160];
 
 /** Nivel mínimo para desbloquear cada juego. */
 export const GAME_UNLOCK_LEVEL = {
