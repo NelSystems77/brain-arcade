@@ -25,16 +25,35 @@ function getBus() {
     if (!ctx) return null;
     if (bus?.ctx === ctx) return bus;
 
+    // Los altavoces de móviles/tabletas reproducen muy mal los sonidos suaves y graves:
+    // se sube el nivel general y un compresor evita que los picos distorsionen.
+    const touch = window.matchMedia?.('(pointer: coarse)').matches;
     const out = ctx.createGain();
-    out.gain.value = 0.9;
-    out.connect(ctx.destination);
+    out.gain.value = touch ? 3.2 : 0.9;
+    let dest = ctx.destination;
+    try {
+        const comp = ctx.createDynamicsCompressor();
+        comp.threshold.value = -16;
+        comp.knee.value = 14;
+        comp.ratio.value = 8;
+        comp.attack.value = 0.004;
+        comp.release.value = 0.25;
+        comp.connect(ctx.destination);
+        dest = comp;
+    } catch { /* sin compresor */ }
+    out.connect(dest);
 
+    // La reverb es un extra: si el navegador no la admite, el sonido directo sigue funcionando.
     const send = ctx.createGain();
-    const verb = ctx.createConvolver();
-    verb.buffer = makeImpulse(ctx);
-    const wet = ctx.createGain();
-    wet.gain.value = 0.32;
-    send.connect(verb).connect(wet).connect(out);
+    try {
+        const verb = ctx.createConvolver();
+        verb.buffer = makeImpulse(ctx);
+        const wet = ctx.createGain();
+        wet.gain.value = 0.32;
+        send.connect(verb).connect(wet).connect(out);
+    } catch (err) {
+        console.warn('asmr: reverb no disponible', err);
+    }
 
     // Ruido blanco en bucle (base del agua).
     noise = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
@@ -211,7 +230,7 @@ function scheduleChord(m, at) {
 
     // Colchón: cada nota entra despacio y se desvanece solapada con el siguiente acorde.
     for (const f of chord.tones) {
-        for (const [mult, detune, v] of [[0.5, -3, 0.5], [1, 4, 0.35]]) {
+        for (const [mult, detune, v] of [[0.5, -3, 0.4], [1, 4, 0.35], [2, 2, 0.22]]) {
             const osc = b.ctx.createOscillator();
             osc.type = 'sine';
             osc.frequency.value = f * mult;
@@ -301,7 +320,8 @@ function guarded(fn) {
         try {
             const b = getBus();
             return b ? fn(b, ...args) : undefined;
-        } catch {
+        } catch (err) {
+            console.warn('asmr:', err);
             return undefined;
         }
     };
