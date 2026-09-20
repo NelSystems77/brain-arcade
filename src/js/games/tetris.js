@@ -1,5 +1,6 @@
 import { TETRIS_XP } from '../config.js';
 import { sfx } from '../fx.js';
+import { asmr } from '../asmr.js';
 import {
     COLS, ROWS, PIECES, GOAL_LINES,
     gravityMs, levelForLines, scoreForLines,
@@ -54,12 +55,14 @@ export class TetrisGame {
         this.buildDom();
         this.bindEvents();
         this.reset();
+        asmr.startMusic();
         this.last = performance.now();
         this.raf = requestAnimationFrame((t) => this.frame(t));
     }
 
     destroy() {
         this.dead = true;
+        asmr.stopMusic();
         cancelAnimationFrame(this.raf);
         clearTimeout(this.winTimer);
         for (const t of this.holdTimers.values()) { clearTimeout(t.delay); clearInterval(t.rep); }
@@ -85,6 +88,8 @@ export class TetrisGame {
         this.spawnNext();
         this.showOverlay(null);
         this.updateHud();
+        asmr.setMusicLevel(1);
+        asmr.setMusicSoft(false);
     }
 
     nextId() {
@@ -104,13 +109,16 @@ export class TetrisGame {
     gameOver() {
         this.phase = 'over';
         this.piece = null;
-        sfx.play('wrong');
+        asmr.over();
+        asmr.setMusicSoft(true);
         this.showOverlay('over');
     }
 
     win() {
         this.phase = 'won';
         this.piece = null;
+        asmr.chime();
+        asmr.setMusicSoft(true);
         this.showOverlay('won');
         this.winTimer = setTimeout(() => { if (!this.dead) this.onComplete(TETRIS_XP); }, 1800);
     }
@@ -159,11 +167,11 @@ export class TetrisGame {
         if (!inside) { this.gameOver(); return; }
         const rows = fullRows(this.board);
         if (rows.length === 0) {
-            sfx.play('lock');
+            asmr.lock();
             this.spawnNext();
             return;
         }
-        sfx.play(rows.length === 4 ? 'tetris' : 'line');
+        asmr.line(rows.length);
         this.phase = 'clearing';
         this.clearRows = rows;
         this.clearTimer = 0;
@@ -175,9 +183,14 @@ export class TetrisGame {
         this.clearRows = [];
         this.score += scoreForLines(count, this.level);
         this.lines += count;
+        const prevLevel = this.level;
         this.level = levelForLines(this.lines);
         this.updateHud();
         if (this.lines >= GOAL_LINES) { this.win(); return; }
+        if (this.level > prevLevel) {
+            asmr.rise();
+            asmr.setMusicLevel(this.level);
+        }
         this.phase = 'play';
         this.spawnNext();
     }
@@ -199,7 +212,7 @@ export class TetrisGame {
         if (!p) return;
         this.piece = p;
         this.touched();
-        sfx.play('move');
+        asmr.move();
     }
 
     rotate(dir = 1) {
@@ -208,7 +221,7 @@ export class TetrisGame {
         if (!p) return;
         this.piece = p;
         this.touched();
-        sfx.play('rotate');
+        asmr.rotate();
     }
 
     stepDown() {
@@ -233,7 +246,7 @@ export class TetrisGame {
     holdPiece() {
         if (!this.playing || !this.canHold) return;
         const cur = this.piece.id;
-        sfx.play('flip');
+        asmr.pick();
         const swap = this.hold;
         this.hold = cur;
         this.spawnNext(swap ?? undefined);
@@ -244,9 +257,11 @@ export class TetrisGame {
     togglePause() {
         if (this.phase === 'play') {
             this.phase = 'paused';
+            asmr.setMusicSoft(true);
             this.showOverlay('paused');
         } else if (this.phase === 'paused') {
             this.phase = 'play';
+            asmr.setMusicSoft(false);
             this.showOverlay(null);
             this.last = performance.now();
         }
