@@ -16,6 +16,11 @@ const SOFT_MS = 45;
 const BEST_KEY = 'brainArcadeTetrisBest';
 
 /** Dibuja un bloque con relieve (estilo "3D" de las tarjetas). */
+function rounded(ctx, x, y, w, h, r) {
+    if (ctx.roundRect) ctx.roundRect(x, y, w, h, r);
+    else ctx.rect(x, y, w, h); // Safari antiguo
+}
+
 function drawBlock(ctx, px, py, size, color, alpha = 1) {
     ctx.save();
     ctx.globalAlpha = alpha;
@@ -23,11 +28,11 @@ function drawBlock(ctx, px, py, size, color, alpha = 1) {
     const s = size - pad * 2;
     ctx.fillStyle = color;
     ctx.beginPath();
-    ctx.roundRect(px + pad, py + pad, s, s, size * 0.16);
+    rounded(ctx, px + pad, py + pad, s, s, size * 0.16);
     ctx.fill();
     ctx.fillStyle = 'rgba(255,255,255,0.38)';
     ctx.beginPath();
-    ctx.roundRect(px + pad + 2, py + pad + 2, s - 4, s * 0.3, size * 0.1);
+    rounded(ctx, px + pad + 2, py + pad + 2, s - 4, s * 0.3, size * 0.1);
     ctx.fill();
     ctx.fillStyle = 'rgba(0,0,0,0.26)';
     ctx.fillRect(px + pad + 2, py + size - pad - s * 0.2 - 2, s - 4, s * 0.2);

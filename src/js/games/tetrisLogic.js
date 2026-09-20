@@ -20,7 +20,7 @@ export const GOAL_LINES = 20;
 export const LINES_PER_LEVEL = 4;
 
 /** Milisegundos por caída de una fila, por nivel (1-6). */
-const GRAVITY_MS = [800, 620, 460, 330, 230, 150];
+const GRAVITY_MS = [1000, 800, 620, 470, 340, 240];
 export const gravityMs = (level) => GRAVITY_MS[Math.min(level, GRAVITY_MS.length) - 1];
 
 const LINE_POINTS = [0, 100, 300, 500, 800];

@@ -10,13 +10,42 @@ try {
 
 /** Crea/reanuda el AudioContext (requiere un gesto previo del usuario). */
 function audio() {
-    if (!ctx) {
+    if (!ctx || ctx.state === 'closed') {
         const Ctor = window.AudioContext || window.webkitAudioContext;
         if (!Ctor) return null;
+        // iOS: que el audio suene aunque el interruptor de silencio esté activado.
+        try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch { /* noop */ }
         ctx = new Ctor();
     }
-    if (ctx.state === 'suspended') ctx.resume();
+    // Safari también usa 'interrupted' (llamada, pantalla bloqueada...); resume() puede rechazarse fuera de un gesto.
+    if (ctx.state !== 'running') {
+        try { ctx.resume()?.catch?.(() => {}); } catch { /* noop */ }
+    }
     return ctx;
+}
+
+/**
+ * Safari/iOS y Android solo activan el audio dentro de un gesto real (toque suelto o clic,
+ * no `pointerdown`). Se escucha siempre: si el sistema lo vuelve a suspender, el siguiente toque lo reactiva.
+ */
+function primeAudio() {
+    if (ctx?.state === 'running') return;
+    const c = audio();
+    if (!c) return;
+    try {
+        const src = c.createBufferSource();
+        src.buffer = c.createBuffer(1, 1, 22050); // un sample de silencio "despierta" el motor en iOS
+        src.connect(c.destination);
+        src.start(0);
+    } catch { /* noop */ }
+}
+if (typeof document !== 'undefined') {
+    for (const ev of ['touchend', 'click', 'keydown', 'pointerup']) {
+        document.addEventListener(ev, primeAudio, { capture: true, passive: true });
+    }
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && ctx && ctx.state !== 'running') audio();
+    });
 }
 
 function tone({ freq = 440, type = 'sine', dur = 0.15, vol = 0.2, slideTo = null, delay = 0 }) {

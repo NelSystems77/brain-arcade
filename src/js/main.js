@@ -101,8 +101,7 @@ function main() {
         timerId = null;
     }
 
-    // Habilita el audio en el primer gesto del usuario (política de autoplay).
-    window.addEventListener('pointerdown', () => sfx.unlock(), { once: true });
+    // El audio se habilita en el primer toque/clic (política de autoplay): ver `primeAudio` en sfx.js.
 
     // ---- Progreso de usuario --------------------------------------------------
     const userManager = new UserManager({
