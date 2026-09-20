@@ -47,6 +47,11 @@ const SOUNDS = {
     match: () => { tone({ freq: 660, dur: 0.1, vol: 0.16 }); tone({ freq: 990, dur: 0.13, vol: 0.16, delay: 0.09 }); },
     wrong: () => tone({ freq: 220, type: 'sawtooth', dur: 0.24, vol: 0.13, slideTo: 120 }),
     win: () => arpeggio([523, 659, 784, 1047]),
+    move: () => tone({ freq: 240, type: 'triangle', dur: 0.04, vol: 0.06 }),
+    rotate: () => tone({ freq: 420, type: 'triangle', dur: 0.06, vol: 0.09, slideTo: 560 }),
+    lock: () => tone({ freq: 140, type: 'sine', dur: 0.09, vol: 0.16, slideTo: 90 }),
+    line: () => arpeggio([523, 659, 784], { step: 0.06, vol: 0.14 }),
+    tetris: () => arpeggio([392, 523, 659, 784, 1047], { step: 0.06, vol: 0.15 }),
     levelup: () => arpeggio([392, 523, 659, 784, 1047], { type: 'square', step: 0.08, vol: 0.13 }),
 };
 

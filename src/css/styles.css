@@ -961,3 +961,48 @@ body.accessible :focus-visible { outline: 4px solid var(--primary); outline-offs
         color: var(--text-color); background: color-mix(in srgb, var(--primary) 14%, var(--card-bg));
     }
 }
+
+/* =========================================
+   JUEGO: TETRIS
+   ========================================= */
+.ttr { max-width: 460px; margin: 0 auto; }
+.ttr-stage { display: flex; gap: 10px; align-items: flex-start; justify-content: center; }
+.ttr-board-wrap {
+    position: relative; flex: 1 1 auto; min-width: 0; max-width: 300px;
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 0 0 4px #4b2fd6, 0 8px 0 4px #2f1d94, 0 16px 26px rgba(0, 0, 0, 0.22);
+}
+.ttr-board {
+    display: block; width: 100%; height: auto; aspect-ratio: 1 / 2; max-height: 66vh; margin: 0 auto;
+    touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.ttr-overlay {
+    position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px; padding: 16px; text-align: center; color: #fff;
+    background: rgba(15, 12, 44, 0.82); backdrop-filter: blur(3px);
+}
+.ttr-overlay[hidden] { display: none; }
+.ttr-overlay h3 { margin: 0; font-family: var(--font-display); font-size: 1.6rem; }
+.ttr-overlay p { margin: 0 0 6px; }
+.ttr-side { display: flex; flex-direction: column; gap: 8px; width: 88px; flex: none; }
+.ttr-box, .ttr-stat {
+    background: #1b1748; color: #fff; border-radius: 12px; padding: 6px 4px;
+    text-align: center; font-family: var(--font-display); box-shadow: 0 4px 0 #0f0c2c;
+}
+.ttr-box span, .ttr-stat span { display: block; font-size: 0.7rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.04em; }
+.ttr-box canvas { display: block; width: 100%; height: auto; margin: 2px auto 0; }
+.ttr-stat b { font-size: 1.05rem; }
+.ttr-pause { padding: 8px 4px; font-size: 0.8rem; }
+.ttr-pad {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 320px; margin: 18px auto 0;
+    touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.ttr-pad button {
+    min-height: 54px; font-size: 1.4rem; border: 0; border-radius: 16px; cursor: pointer;
+    background: var(--primary); color: #fff; box-shadow: 0 5px 0 var(--primary-ink);
+}
+.ttr-pad button:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--primary-ink); }
+.ttr-hint { max-width: 460px; margin: 12px auto 0; font-size: 0.85rem; color: var(--muted); line-height: 1.4; text-align: center; }
+@media (hover: hover) and (pointer: fine) {
+    .ttr-pad { display: none; }
+}

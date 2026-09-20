@@ -13,6 +13,9 @@ export const GAME_REWARDS = {
 /** Mi Dispensa: XP al completarla según la dificultad (1-5). */
 export const DISPENSA_XP = [50, 80, 100, 120, 160];
 
+/** Tetris: XP al eliminar todas las filas de la meta. */
+export const TETRIS_XP = 90;
+
 /** Nivel mínimo para desbloquear cada juego. */
 export const GAME_UNLOCK_LEVEL = {
     anagrams: 1,
@@ -20,6 +23,7 @@ export const GAME_UNLOCK_LEVEL = {
     sudoku: 1,
     trivia: 1,
     dispensa: 1,
+    tetris: 1,
     crossword: 10,
 };
 
