@@ -1006,3 +1006,32 @@ body.accessible :focus-visible { outline: 4px solid var(--primary); outline-offs
 @media (hover: hover) and (pointer: fine) {
     .ttr-pad { display: none; }
 }
+
+/* =========================================
+   JUEGO: SOPA DE LETRAS
+   ========================================= */
+.ws { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.ws-grid {
+    display: grid; grid-template-columns: repeat(var(--n), 1fr); gap: 3px;
+    width: 100%; max-width: 420px; padding: 8px; border-radius: 18px;
+    background: var(--card-bg);
+    box-shadow: 0 0 0 4px var(--primary), 0 8px 0 4px var(--primary-ink), 0 16px 26px rgba(0, 0, 0, 0.18);
+    touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.ws-cell {
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(0.9rem, 4.2vw, 1.4rem);
+    border-radius: 8px; cursor: pointer; color: var(--text-color);
+    transition: background 0.12s, transform 0.12s;
+}
+.ws-cell.sel { background: var(--primary); color: #fff; transform: scale(1.08); }
+.ws-cell.found { background: var(--fc, var(--accent)); color: #fff; }
+.ws-words { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; list-style: none; margin: 0; padding: 0; max-width: 460px; }
+.ws-words li {
+    padding: 6px 12px; border-radius: 999px; font-family: var(--font-display); font-weight: 600; font-size: 0.95rem;
+    background: color-mix(in srgb, var(--primary) 14%, var(--card-bg)); color: var(--text-color);
+}
+.ws-words li.done { text-decoration: line-through; opacity: 0.5; }
+.ws-count { margin: 0; color: var(--muted); font-size: 0.9rem; }
+body.accessible .ws-cell { font-size: clamp(1.1rem, 5.2vw, 1.7rem); }
+body.accessible .ws-words li { font-size: 1.15rem; }

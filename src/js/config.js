@@ -16,6 +16,9 @@ export const DISPENSA_XP = [50, 80, 100, 120, 160];
 /** Tetris: XP al eliminar todas las filas de la meta. */
 export const TETRIS_XP = 90;
 
+/** Sopa de letras: XP al encontrar todas las palabras. */
+export const WORDSEARCH_XP = 70;
+
 /** Nivel mínimo para desbloquear cada juego. */
 export const GAME_UNLOCK_LEVEL = {
     anagrams: 1,
@@ -24,6 +27,7 @@ export const GAME_UNLOCK_LEVEL = {
     trivia: 1,
     dispensa: 1,
     tetris: 1,
+    wordsearch: 1,
     crossword: 10,
 };
 

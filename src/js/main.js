@@ -12,6 +12,7 @@ import { CrosswordGame } from './games/crossword.js';
 import { TriviaGame } from './games/trivia.js';
 import { DispensaGame } from './games/dispensa.js';
 import { TetrisGame } from './games/tetris.js';
+import { WordSearchGame } from './games/wordSearch.js';
 import { makeRefranes, makeBombas, makeRetahilas } from './exercises/verbal.js';
 import { RecuerdasExercise } from './exercises/recuerdas.js';
 import { initVisitCounter } from './visits.js';
@@ -25,6 +26,7 @@ const GAME_FACTORY = {
     crossword: (area, theme, onWin) => new CrosswordGame(area, theme, onWin),
     dispensa: (area, theme, onWin, level) => new DispensaGame(area, onWin, level),
     tetris: (area, theme, onWin) => new TetrisGame(area, onWin),
+    wordsearch: (area, theme, onWin, level) => new WordSearchGame(area, theme, onWin, level),
 };
 
 /** Ejercicios de Mente Activa: reciben (contenedor, onComplete(aciertos, total)). */
