@@ -1,6 +1,7 @@
 import { shuffle, calmMode } from '../utils.js';
 import { WORDSEARCH_XP } from '../config.js';
-import { sfx, shake } from '../fx.js';
+import { shake } from '../fx.js';
+import { asmr } from '../asmr.js';
 import {
     candidateWords, buildPuzzle, snapLine, matchSelection,
     DIRS_EASY, DIRS_MEDIUM, DIRS_HARD,
@@ -58,6 +59,13 @@ export class WordSearchGame {
         this.grid.addEventListener('pointermove', (e) => this.onMove(e));
         this.grid.addEventListener('pointerup', (e) => this.onUp(e));
         this.grid.addEventListener('pointercancel', () => this.clearSelection());
+        asmr.startMusic();
+    }
+
+    destroy() {
+        this.dead = true;
+        clearTimeout(this.winTimer);
+        asmr.stopMusic();
     }
 
     cellAt(e) {
@@ -79,7 +87,7 @@ export class WordSearchGame {
         this.tapMode = !!this.pendingTap; // segundo toque: el inicio es el primero
         this.dragStart = this.pendingTap ?? pos;
         this.paint(snapLine(this.dragStart, pos, SIZE));
-        sfx.play('click');
+        asmr.pick();
     }
 
     onMove(e) {
@@ -122,7 +130,7 @@ export class WordSearchGame {
         this.paint([]);
 
         if (!hit) {
-            if (line.length > 1) { sfx.play('wrong'); shake(this.grid); }
+            if (line.length > 1) { asmr.deny(); shake(this.grid); }
             return;
         }
 
@@ -134,13 +142,14 @@ export class WordSearchGame {
             el.style.setProperty('--fc', color);
         }
         this.container.querySelector(`li[data-word="${hit.word}"]`)?.classList.add('done');
-        sfx.play('match');
+        asmr.line(2);
         this.updateCount();
 
         if (this.found.size === this.puzzle.placed.length) {
             this.solved = true;
-            sfx.play('win');
-            setTimeout(() => this.onComplete(WORDSEARCH_XP), 900);
+            asmr.setMusicSoft(true);
+            asmr.chime();
+            this.winTimer = setTimeout(() => { if (!this.dead) this.onComplete(WORDSEARCH_XP); }, 1200);
         }
     }
 
